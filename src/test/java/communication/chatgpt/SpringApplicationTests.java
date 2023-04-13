@@ -1,10 +1,10 @@
-package communication.springchatgptcommunication;
+package communication.chatgpt;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringChatgptCommunicationApplicationTests {
+class SpringApplicationTests {
 
 	@Test
 	void contextLoads() {
