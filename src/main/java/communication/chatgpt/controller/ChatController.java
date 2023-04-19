@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ChatController {
 
     @PostMapping("/ask")
-    public String ask(@RequestBody askRequest request) {
+    public String ask(@RequestBody AskRequest request) {
         return "ask";
     }
 
     @PostMapping("/grammar")
-    public String grammarCheck(@RequestBody grammarCheckRequest request) {
+    public String grammarCheck(@RequestBody GrammarCheckRequest request) {
         return "grammarCheck";
     }
 
@@ -26,7 +26,7 @@ public class ChatController {
     }
 
     @PostMapping("/mood")
-    public String emotionalAnalysis(@RequestBody emotionalAnalysisRequest request) {
+    public String emotionalAnalysis(@RequestBody EmotionalAnalysisRequest request) {
         return "emotionalAnalysis";
     }
 

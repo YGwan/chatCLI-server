@@ -1,7 +1,7 @@
 package communication.chatgpt.controller;
 
 import communication.chatgpt.dto.SearchUserQRequest;
-import communication.chatgpt.dto.askAndStoreRequest;
+import communication.chatgpt.dto.AskAndStoreRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ import java.util.List;
 public class DBController {
 
     @PostMapping("/ask")
-    public String askAndStore(@RequestBody askAndStoreRequest request) {
+    public String askAndStore(@RequestBody AskAndStoreRequest request) {
         return "askAndStore";
     }
 

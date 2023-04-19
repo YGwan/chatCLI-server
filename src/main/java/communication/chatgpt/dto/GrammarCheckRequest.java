@@ -1,4 +1,4 @@
 package communication.chatgpt.dto;
 
-public class askRequest {
+public class GrammarCheckRequest {
 }
