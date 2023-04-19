@@ -1,4 +1,4 @@
-package communication.chatgpt.Controller;
+package communication.chatgpt.controller;
 
 import communication.chatgpt.dto.*;
 import org.springframework.web.bind.annotation.PostMapping;

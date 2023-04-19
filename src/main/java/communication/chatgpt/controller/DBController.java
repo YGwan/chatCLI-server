@@ -1,4 +1,4 @@
-package communication.chatgpt.Controller;
+package communication.chatgpt.controller;
 
 import communication.chatgpt.dto.SearchUserQRequest;
 import communication.chatgpt.dto.askAndStoreRequest;
