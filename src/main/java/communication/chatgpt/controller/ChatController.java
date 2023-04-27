@@ -17,41 +17,33 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/v1")
 public class ChatController {
 
-    @Value("${open-ai.chat.model}")
-    private String model;
-
     @Value("${open-ai.token}")
     private String token;
 
-    @Value("${open-ai.apiUrl}")
-    private String apiUrl;
+//    @PostMapping("/chat/completions")
+//    public String ask(@RequestBody AskRequestDto askRequest) throws JsonProcessingException {
+//
+//        HttpHeaders headers = new HttpHeaders();
+//        headers.setContentType(MediaType.APPLICATION_JSON);
+//        headers.setBearerAuth(token);
+//
+//        ObjectMapper objectMapperWrite = new ObjectMapper();
+//        String body = objectMapperWrite.writeValueAsString(askRequest);
+//
+//        HttpEntity<String> request = new HttpEntity<>(body,headers);
+//        RestTemplate rt = new RestTemplate();
+//
+//        ResponseEntity<String> response = rt.exchange(apiUrl,HttpMethod.POST,request,String.class);
+//        String json = response.getBody();
+//
+//        ObjectMapper objectMapperRead = new ObjectMapper();
+//        AskResponseDto askResponseDto = objectMapperRead.readValue(json, AskResponseDto.class);
+//        String content = askResponseDto.getChoices().get(0).getMessage().getContent();
+//        return content;
+//    }
 
-    @PostMapping("/chat/completions")
-    public String ask(@RequestBody AskRequestDto askRequest) throws JsonProcessingException {
-
-        askRequest.setModel(model);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(token);
-
-        ObjectMapper objectMapperWrite = new ObjectMapper();
-        String body = objectMapperWrite.writeValueAsString(askRequest);
-
-        HttpEntity<String> request = new HttpEntity<>(body,headers);
-        RestTemplate rt = new RestTemplate();
-
-        ResponseEntity<String> response = rt.exchange(apiUrl,HttpMethod.POST,request,String.class);
-        String json = response.getBody();
-
-        ObjectMapper objectMapperRead = new ObjectMapper();
-        AskResponseDto askResponseDto = objectMapperRead.readValue(json, AskResponseDto.class);
-        String content = askResponseDto.getChoices().get(0).getMessage().getContent();
-        return content;
-    }
-
-    @PostMapping("/grammar")
-    public String grammarCheck(@RequestBody GrammarCheckRequest request) {
+    @PostMapping("/edits")
+    public String edits(@RequestBody GrammarCheckRequest request) {
         return "grammarCheck";
     }
 
