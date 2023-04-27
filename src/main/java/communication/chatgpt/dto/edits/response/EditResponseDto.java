@@ -1,6 +1,6 @@
 package communication.chatgpt.dto.edits.response;
 
-import communication.chatgpt.dto.chat.response.UsageDto;
+import communication.chatgpt.dto.chat.response.ChatUsageDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +17,5 @@ public class EditResponseDto {
     private String object;
     private long created;
     private List<EditChoiceDto> choices;
-    private UsageDto usage;
+    private ChatUsageDto usage;
 }

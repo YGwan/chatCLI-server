@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.createchat.response;
+package communication.chatgpt.dto.chat.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ChoiceDto {
+public class ChatMessageDto {
 
-    private MessageDto message;
-    private String finish_reason;
-    private int index;
-
+    private String role;
+    private String content;
 }
