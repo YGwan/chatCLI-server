@@ -26,10 +26,6 @@ public class SpringConfig {
 
     @Bean
     public HttpHeaders headers() {
-        return makeHttpHeaders();
-    }
-
-    private HttpHeaders makeHttpHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(token);
