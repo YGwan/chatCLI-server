@@ -5,7 +5,7 @@ import javax.persistence.*;
 @Entity
 public class Question {
 
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     Long id;
 
