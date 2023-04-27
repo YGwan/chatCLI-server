@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.edits;
+package communication.chatgpt.dto.edits.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,16 +8,10 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 
 @Getter @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class EditParsedRequestDto {
-
-    @NotNull
-    private String model;
+@NoArgsConstructor
+public class EditsRequestDto {
 
     @NotNull
     private String input;
-
-    @NotNull
-    private String instruction;
 }
