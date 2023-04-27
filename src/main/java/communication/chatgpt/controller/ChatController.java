@@ -2,11 +2,15 @@ package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import communication.chatgpt.dto.*;
-import communication.chatgpt.dto.createchat.reqeust.AskRequestDto;
-import communication.chatgpt.dto.createchat.response.AskResponseDto;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import communication.chatgpt.data.Edits;
+import communication.chatgpt.dto.EmotionalAnalysisRequest;
+import communication.chatgpt.dto.SummarizeRequest;
+import communication.chatgpt.dto.TranslateRequest;
+import communication.chatgpt.dto.edits.request.EditsRequestDto;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,10 +21,19 @@ import org.springframework.web.client.RestTemplate;
 @RequestMapping("/v1")
 public class ChatController {
 
-    @Value("${open-ai.token}")
-    private String token;
+    private final HttpHeaders headers;
+    private final RestTemplate rt;
+    private final ObjectMapper om;
+    private final ParsingMachine parsingMachine;
 
-//    @PostMapping("/chat/completions")
+    public ChatController(HttpHeaders headers, RestTemplate rt, ObjectMapper om, ParsingMachine parsingMachine) {
+        this.headers = headers;
+        this.rt = rt;
+        this.om = om;
+        this.parsingMachine = parsingMachine;
+    }
+
+    //    @PostMapping("/chat/completions")
 //    public String ask(@RequestBody AskRequestDto askRequest) throws JsonProcessingException {
 //
 //        HttpHeaders headers = new HttpHeaders();
@@ -43,8 +56,11 @@ public class ChatController {
 //    }
 
     @PostMapping("/edits")
-    public String edits(@RequestBody GrammarCheckRequest request) {
-        return "grammarCheck";
+    public String edits(@RequestBody EditsRequestDto requestDto) throws JsonProcessingException {
+        String editsRequestDto = parsingMachine.editsRequestDto(requestDto, om);
+        HttpEntity<String> request = new HttpEntity<>(editsRequestDto, headers);
+        ResponseEntity<String> response = rt.exchange(Edits.GRAMMAR_ENDPOINT.data(), HttpMethod.POST, request, String.class);
+        return parsingMachine.editsResponseDto(response.getBody(), om);
     }
 
     @PostMapping("/translator")
