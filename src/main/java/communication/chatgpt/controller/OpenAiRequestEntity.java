@@ -5,24 +5,26 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Edits;
 import communication.chatgpt.dto.edits.request.EditsParsedRequestDto;
 import communication.chatgpt.dto.edits.request.EditsRequestDto;
-import communication.chatgpt.dto.edits.response.EditResponseDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
+@RequiredArgsConstructor
 @Component
-public class ParsingMachine {
+public class OpenAiRequestEntity {
 
-    public String editsRequestDto(EditsRequestDto editRequest, ObjectMapper objectMapperWrite) throws JsonProcessingException {
-        return objectMapperWrite.
+    private final ObjectMapper objectMapper;
+    private final HttpHeaders headers;
+
+    public HttpEntity<String> editsParsed(EditsRequestDto editRequest) throws JsonProcessingException {
+        String editsOpenAiBody = objectMapper.
                 writeValueAsString(
                         new EditsParsedRequestDto(
                                 Edits.MODEL.data(),
                                 editRequest.getInput(),
                                 Edits.INSTRUCTION.data()
                         ));
-    }
-
-    public String editsResponseDto(String response, ObjectMapper objectMapper) throws JsonProcessingException {
-        EditResponseDto editResponseDto = objectMapper.readValue(response, EditResponseDto.class);
-        return editResponseDto.getChoices().get(0).getText().trim();
+        return new HttpEntity<>(editsOpenAiBody, headers);
     }
 }

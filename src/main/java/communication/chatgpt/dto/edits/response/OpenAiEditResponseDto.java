@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EditResponseDto {
+public class OpenAiEditResponseDto {
 
     private String object;
     private long created;
