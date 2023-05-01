@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Keyword {
 
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     Long id;
 
