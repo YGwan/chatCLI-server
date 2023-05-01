@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.tweetClassifier;
+package communication.chatgpt.dto.tweetClassifier.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
