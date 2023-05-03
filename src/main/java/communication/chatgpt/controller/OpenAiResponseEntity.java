@@ -3,10 +3,10 @@ package communication.chatgpt.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Edits;
-import communication.chatgpt.data.TweetClassifier;
+import communication.chatgpt.data.Completions;
 import communication.chatgpt.dto.UserResponse;
 import communication.chatgpt.dto.edits.response.OpenAiEditResponseDto;
-import communication.chatgpt.dto.tweetClassifier.response.TweetClassifierResponseDto;
+import communication.chatgpt.dto.completions.response.CompletionsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -28,10 +28,10 @@ public class OpenAiResponseEntity {
         return getStringResponseEntity(openAiMessage);
     }
 
-    public ResponseEntity<String> tweetClassifierParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        ResponseEntity<String> response = rt.exchange(TweetClassifier.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
-        TweetClassifierResponseDto tweetClassifierResponseDto = objectMapper.readValue(response.getBody(), TweetClassifierResponseDto.class);
-        String openAiMessage = tweetClassifierResponseDto.getChoices().get(0).getText().trim();
+    public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
+        ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
+        CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
+        String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();
         return getStringResponseEntity(openAiMessage);
     }
 

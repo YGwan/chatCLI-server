@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.tweetClassifier.response;
+package communication.chatgpt.dto.completions.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,12 +11,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TweetClassifierResponseDto {
+public class CompletionsResponseDto {
 
     private String id;
     private String object;
     private long created;
     private String model;
-    private List<TweetClassifierChoicesDto> choices;
-    private TweetClassifierUsageDto usage;
+    private List<CompletionsChoicesDto> choices;
+    private CompletionsUsageDto usage;
 }

@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.tweetClassifier.request;
+package communication.chatgpt.dto.completions.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,14 +11,12 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TweetClassifierParsedRequestDto {
+public class CompletionsParsedRequestDto {
 
     private final static int TEMPERATURE = 0;
-    private final static int MAX_TOKENS = 60;
     private final static double TOP_P = 1.0;
     private final static double FREQUENCY_PENALTY = 0.0;
     private final static double PRESENCE_PENALTY = 0.0;
-
 
     @NotNull
     private String model;
@@ -36,11 +34,11 @@ public class TweetClassifierParsedRequestDto {
 
     private double presence_penalty;
 
-    public TweetClassifierParsedRequestDto(String model, String prompt) {
+    public CompletionsParsedRequestDto(String model, String prompt, int length) {
         this.model = model;
         this.prompt = prompt;
         this.temperature = TEMPERATURE;
-        this.max_tokens = MAX_TOKENS;
+        this.max_tokens = length;
         this.top_p = TOP_P;
         this.frequency_penalty = FREQUENCY_PENALTY;
         this.presence_penalty = PRESENCE_PENALTY;
