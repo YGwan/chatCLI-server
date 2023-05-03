@@ -4,11 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
 import communication.chatgpt.data.Completions;
+import communication.chatgpt.data.Summarize;
 import communication.chatgpt.dto.chat.request.ChatParsedRequestDto;
 import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.chat.response.ChatMessageDto;
 import communication.chatgpt.dto.completions.request.CompletionsParsedRequestDto;
 import communication.chatgpt.dto.completions.request.CompletionsRequestDto;
+import communication.chatgpt.dto.summary.request.SummarizeParsedRequestDto;
+import communication.chatgpt.dto.summary.request.SummarizeRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -61,7 +64,7 @@ public class OpenAiRequestEntity {
     }
 
     public HttpEntity<String> tweetClassifierParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
-        String tweetClassifierOpenAiBody = objectMapper.
+        String summarizeOpenAiBody = objectMapper.
                 writeValueAsString(
                         new CompletionsParsedRequestDto(
                                 Completions.MODEL.data(),
@@ -69,6 +72,17 @@ public class OpenAiRequestEntity {
                                 completionsRequest.getPrompt().length() * 2
                         )
                 );
-        return new HttpEntity<>(tweetClassifierOpenAiBody, headers);
+        return new HttpEntity<>(summarizeOpenAiBody, headers);
+    }
+
+    public HttpEntity<String> summarizeParsed(SummarizeRequestDto summarizeRequest) throws JsonProcessingException {
+        String summarizeOpenAiBody = objectMapper.
+                writeValueAsString(
+                        new SummarizeParsedRequestDto(
+                                Summarize.MODEL.data(),
+                                summarizeRequest.getPrompt() + "Tl;dr"
+                        )
+                );
+        return new HttpEntity<>(summarizeOpenAiBody, headers);
     }
 }
