@@ -3,7 +3,6 @@ package communication.chatgpt.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import communication.chatgpt.dto.SummarizeRequest;
 import communication.chatgpt.dto.completions.request.CompletionsRequestDto;
-import communication.chatgpt.dto.edits.request.EditsRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("/v1")
-public class ChatController {
+public class OpenAiController {
 
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
@@ -42,10 +41,10 @@ public class ChatController {
 //        return content;
 //    }
 
-    @PostMapping("/grammar")
-    public ResponseEntity<String> edits(@RequestBody EditsRequestDto request) throws JsonProcessingException {
-        HttpEntity<String> openAiRequest = openAiRequestEntity.editsParsed(request);
-        return openAiResponseEntity.editsParsed(openAiRequest);
+    @PostMapping("/gc")
+    public ResponseEntity<String> grammarCheck(@RequestBody CompletionsRequestDto request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
+        return openAiResponseEntity.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/mood")
@@ -57,7 +56,7 @@ public class ChatController {
     @PostMapping("/trans")
     public ResponseEntity<String> translate(@RequestBody CompletionsRequestDto request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.translateParsed(request);
-       return openAiResponseEntity.completionsParsed(openAiRequest);
+        return openAiResponseEntity.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/summarize")
