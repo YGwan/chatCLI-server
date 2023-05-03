@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import communication.chatgpt.dto.EmotionalAnalysisRequest;
 import communication.chatgpt.dto.SummarizeRequest;
 import communication.chatgpt.dto.TranslateRequest;
+import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.edits.request.EditsRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -21,27 +22,11 @@ public class ChatController {
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
 
-    //    @PostMapping("/chat/completions")
-//    public String ask(@RequestBody AskRequestDto askRequest) throws JsonProcessingException {
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.setBearerAuth(token);
-//
-//        ObjectMapper objectMapperWrite = new ObjectMapper();
-//        String body = objectMapperWrite.writeValueAsString(askRequest);
-//
-//        HttpEntity<String> request = new HttpEntity<>(body,headers);
-//        RestTemplate rt = new RestTemplate();
-//
-//        ResponseEntity<String> response = rt.exchange(apiUrl,HttpMethod.POST,request,String.class);
-//        String json = response.getBody();
-//
-//        ObjectMapper objectMapperRead = new ObjectMapper();
-//        AskResponseDto askResponseDto = objectMapperRead.readValue(json, AskResponseDto.class);
-//        String content = askResponseDto.getChoices().get(0).getMessage().getContent();
-//        return content;
-//    }
+    @PostMapping("/chat/completions")
+    public ResponseEntity<String> chat(@RequestBody ChatRequestDto request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(request);
+        return openAiResponseEntity.chatParsed(openAiRequest);
+    }
 
     @PostMapping("/edits")
     public ResponseEntity<String> edits(@RequestBody EditsRequestDto request) throws JsonProcessingException {
