@@ -64,7 +64,7 @@ public class OpenAiRequestEntity {
     }
 
     public HttpEntity<String> tweetClassifierParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
-        String summarizeOpenAiBody = objectMapper.
+        String tweetClassifierOpenAiBody = objectMapper.
                 writeValueAsString(
                         new CompletionsParsedRequestDto(
                                 Completions.MODEL.data(),
@@ -72,7 +72,7 @@ public class OpenAiRequestEntity {
                                 completionsRequest.getPrompt().length() * 2
                         )
                 );
-        return new HttpEntity<>(summarizeOpenAiBody, headers);
+        return new HttpEntity<>(tweetClassifierOpenAiBody, headers);
     }
 
     public HttpEntity<String> summarizeParsed(SummarizeRequestDto summarizeRequest) throws JsonProcessingException {
