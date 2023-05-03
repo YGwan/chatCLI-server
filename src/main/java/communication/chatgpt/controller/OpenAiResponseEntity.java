@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
 import communication.chatgpt.data.Completions;
+import communication.chatgpt.data.Summarize;
 import communication.chatgpt.dto.UserResponse;
 import communication.chatgpt.dto.chat.response.OpenAiChatResponseDto;
 import communication.chatgpt.dto.completions.response.CompletionsResponseDto;
+import communication.chatgpt.dto.summary.response.OpenAiSummaryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -28,11 +30,18 @@ public class OpenAiResponseEntity {
         UserResponse userResponse = UserResponse.of(openAiMessage);
         return ResponseEntity.ok(userResponse.answer());
     }
-
     public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
+        System.out.println(openAiRequest);
         ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
         CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
         String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();
+        return getStringResponseEntity(openAiMessage);
+    }
+
+    public ResponseEntity<String> summarizeParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException  {
+        ResponseEntity<String> response = rt.exchange(Summarize.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
+        OpenAiSummaryResponseDto openAiSummarizeResponseDto = objectMapper.readValue(response.getBody(), OpenAiSummaryResponseDto.class);
+        String openAiMessage = openAiSummarizeResponseDto.getChoices().get(0).getText().trim();
         return getStringResponseEntity(openAiMessage);
     }
 
