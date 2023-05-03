@@ -1,7 +1,5 @@
 package communication.chatgpt.dto.summary.response;
 
-import communication.chatgpt.dto.chat.response.ChatUsageDto;
-import communication.chatgpt.dto.edits.response.EditChoiceDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
