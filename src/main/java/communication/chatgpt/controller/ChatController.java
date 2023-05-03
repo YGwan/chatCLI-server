@@ -1,7 +1,7 @@
 package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import communication.chatgpt.dto.EmotionalAnalysisRequest;
+import communication.chatgpt.dto.tweetClassifier.request.TweetClassifierRequestDto;
 import communication.chatgpt.dto.SummarizeRequest;
 import communication.chatgpt.dto.TranslateRequest;
 import communication.chatgpt.dto.edits.request.EditsRequestDto;
@@ -54,9 +54,10 @@ public class ChatController {
         return "translate";
     }
 
-    @PostMapping("/mood")
-    public String emotionalAnalysis(@RequestBody EmotionalAnalysisRequest request) {
-        return "emotionalAnalysis";
+    @PostMapping("/completions")
+    public ResponseEntity<String> tweetClassifier(@RequestBody TweetClassifierRequestDto request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.tweetClassifierParsed(request);
+        return openAiResponseEntity.tweetClassifierParsed(openAiRequest) ;
     }
 
     @PostMapping("/summarize")
