@@ -1,6 +1,6 @@
 package communication.chatgpt.data;
 
-public enum TweetClassifier {
+public enum Completions {
 
     ENDPOINT("https://api.openai.com/v1/completions"),
     MODEL("text-davinci-003"),
@@ -8,7 +8,7 @@ public enum TweetClassifier {
 
     private final String data;
 
-    TweetClassifier(String data) {
+    Completions(String data) {
         this.data = data;
     }
 

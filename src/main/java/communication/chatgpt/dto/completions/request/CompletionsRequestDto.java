@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.tweetClassifier.request;
+package communication.chatgpt.dto.completions.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TweetClassifierRequestDto {
+public class CompletionsRequestDto {
 
     @NotNull
     private String prompt;

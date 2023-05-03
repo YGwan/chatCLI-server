@@ -1,4 +1,4 @@
-package communication.chatgpt.dto.tweetClassifier.response;
+package communication.chatgpt.dto.completions.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TweetClassifierUsageDto {
+public class CompletionsUsageDto {
 
     private int prompt_tokens;
     private int completion_tokens;
