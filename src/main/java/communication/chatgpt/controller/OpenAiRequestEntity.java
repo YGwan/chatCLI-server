@@ -3,13 +3,10 @@ package communication.chatgpt.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
-import communication.chatgpt.data.Edits;
+import communication.chatgpt.data.Completions;
 import communication.chatgpt.dto.chat.request.ChatParsedRequestDto;
 import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.chat.response.ChatMessageDto;
-import communication.chatgpt.dto.edits.request.EditsParsedRequestDto;
-import communication.chatgpt.dto.edits.request.EditsRequestDto;
-import communication.chatgpt.data.Completions;
 import communication.chatgpt.dto.completions.request.CompletionsParsedRequestDto;
 import communication.chatgpt.dto.completions.request.CompletionsRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +23,6 @@ public class OpenAiRequestEntity {
     private final ObjectMapper objectMapper;
     private final HttpHeaders headers;
 
-    public HttpEntity<String> grammarCheckParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
     public HttpEntity<String> chatParsed(ChatRequestDto chatRequest) throws JsonProcessingException {
 
         ChatMessageDto chatMessageDto = new ChatMessageDto(Chat.ROLE.data(), chatRequest.getContent());
@@ -40,7 +36,7 @@ public class OpenAiRequestEntity {
         return new HttpEntity<>(chatOpenAiBody, headers);
     }
 
-    public HttpEntity<String> editsParsed(EditsRequestDto editRequest) throws JsonProcessingException {
+    public HttpEntity<String> grammarCheckParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
         String editsOpenAiBody = objectMapper.
                 writeValueAsString(
                         new CompletionsParsedRequestDto(

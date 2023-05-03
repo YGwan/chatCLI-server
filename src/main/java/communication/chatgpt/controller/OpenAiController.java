@@ -2,6 +2,7 @@ package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import communication.chatgpt.dto.SummarizeRequest;
+import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.completions.request.CompletionsRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
