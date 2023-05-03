@@ -28,7 +28,7 @@ public class OpenAiResponseEntity {
         return getStringResponseEntity(openAiMessage);
     }
 
-    public ResponseEntity<String> tweetClassifierParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
+    public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
         ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
         CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
         String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();

@@ -31,12 +31,26 @@ public class OpenAiRequestEntity {
         return new HttpEntity<>(editsOpenAiBody, headers);
     }
 
-    public HttpEntity<String> tweetClassifierParsed(CompletionsRequestDto request) throws JsonProcessingException {
+    public HttpEntity<String> translateParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
+        String translateOpenAiBody = objectMapper.
+                writeValueAsString(
+                        new CompletionsParsedRequestDto(
+                                Completions.MODEL.data(),
+                                Completions.TRANSLATE.data() + completionsRequest.getPrompt(),
+                                completionsRequest.getPrompt().length() * 2
+                        )
+                );
+        return new HttpEntity<>(translateOpenAiBody, headers);
+
+    }
+
+    public HttpEntity<String> tweetClassifierParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
         String tweetClassifierOpenAiBody = objectMapper.
                 writeValueAsString(
                         new CompletionsParsedRequestDto(
                                 Completions.MODEL.data(),
-                                Completions.MESSAGE.data() + request.getPrompt()
+                                Completions.TWEET_CLASSIFIER.data() + completionsRequest.getPrompt(),
+                                completionsRequest.getPrompt().length() * 2
                         )
                 );
         return new HttpEntity<>(tweetClassifierOpenAiBody, headers);
