@@ -11,7 +11,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ChatResponseDto {
+public class OpenAiChatResponseDto {
 
     private String id;
     private String object;
