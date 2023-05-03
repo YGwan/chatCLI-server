@@ -4,7 +4,8 @@ public enum Completions {
 
     ENDPOINT("https://api.openai.com/v1/completions"),
     MODEL("text-davinci-003"),
-    MESSAGE("Classify the sentiment in these tweets:\n");
+    TWEET_CLASSIFIER("Classify the sentiment in these tweets:\n"),
+    TRANSLATE("Translate this into Korean\n");
 
     private final String data;
 
