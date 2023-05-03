@@ -42,7 +42,7 @@ public class ChatController {
 //        return content;
 //    }
 
-    @PostMapping("/edits")
+    @PostMapping("/grammar")
     public ResponseEntity<String> edits(@RequestBody EditsRequestDto request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.editsParsed(request);
         return openAiResponseEntity.editsParsed(openAiRequest);
@@ -51,7 +51,13 @@ public class ChatController {
     @PostMapping("/mood")
     public ResponseEntity<String> tweetClassifier(@RequestBody CompletionsRequestDto request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.tweetClassifierParsed(request);
-        return openAiResponseEntity.tweetClassifierParsed(openAiRequest);
+        return openAiResponseEntity.completionsParsed(openAiRequest);
+    }
+
+    @PostMapping("/trans")
+    public ResponseEntity<String> translate(@RequestBody CompletionsRequestDto request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.translateParsed(request);
+       return openAiResponseEntity.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/summarize")
