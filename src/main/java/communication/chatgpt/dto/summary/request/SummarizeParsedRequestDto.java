@@ -13,7 +13,6 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class SummarizeParsedRequestDto {
     private final static double TEMPERATURE = 0.7;
-    private final static int MAX_TOKENS = 100;
     private final static double TOP_P = 1.0;
     private final static double FREQUENCY_PENALTY = 0.0;
     private final static int PRESENCE_PENALTY = 1;
@@ -34,11 +33,11 @@ public class SummarizeParsedRequestDto {
 
     private int presence_penalty;
 
-    public SummarizeParsedRequestDto(String model, String prompt) {
+    public SummarizeParsedRequestDto(String model, String prompt, int length) {
         this.model = model;
         this.prompt = prompt;
         this.temperature = TEMPERATURE;
-        this.max_tokens = MAX_TOKENS;
+        this.max_tokens = length;
         this.top_p = TOP_P;
         this.frequency_penalty = FREQUENCY_PENALTY;
         this.presence_penalty = PRESENCE_PENALTY;
