@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
 import communication.chatgpt.data.Completions;
-import communication.chatgpt.data.Summarize;
 import communication.chatgpt.dto.chat.request.ChatParsedRequestDto;
 import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.chat.response.ChatMessageDto;
@@ -79,8 +78,9 @@ public class OpenAiRequestEntity {
         String summarizeOpenAiBody = objectMapper.
                 writeValueAsString(
                         new SummarizeParsedRequestDto(
-                                Summarize.MODEL.data(),
-                                summarizeRequest.getPrompt() + "Tl;dr"
+                                Completions.MODEL.data(),
+                                summarizeRequest.getPrompt() + "Tl;dr",
+                                summarizeRequest.getPrompt().length() * 2
                         )
                 );
         return new HttpEntity<>(summarizeOpenAiBody, headers);
