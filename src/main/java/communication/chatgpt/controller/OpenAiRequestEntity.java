@@ -71,4 +71,16 @@ public class OpenAiRequestEntity {
                 );
         return new HttpEntity<>(tweetClassifierOpenAiBody, headers);
     }
+
+    public HttpEntity<String> summarizeParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
+        String summarizeOpenAiBody = objectMapper.
+                writeValueAsString(
+                        new CompletionsParsedRequestDto(
+                                Completions.MODEL.data(),
+                                completionsRequest.getPrompt() + "Tl;dr",
+                                completionsRequest.getPrompt().length() * 2
+                        )
+                );
+        return new HttpEntity<>(summarizeOpenAiBody, headers);
+    }
 }

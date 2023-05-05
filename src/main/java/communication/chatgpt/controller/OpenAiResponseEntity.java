@@ -28,8 +28,15 @@ public class OpenAiResponseEntity {
         UserResponse userResponse = UserResponse.of(openAiMessage);
         return ResponseEntity.ok(userResponse.answer());
     }
-
     public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
+        return getStringResponseEntityCompletion(openAiRequest);
+    }
+
+    public ResponseEntity<String> summarizeParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException  {
+        return getStringResponseEntityCompletion(openAiRequest);
+    }
+
+    private ResponseEntity<String> getStringResponseEntityCompletion(HttpEntity<String> openAiRequest) throws JsonProcessingException {
         ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
         CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
         String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();

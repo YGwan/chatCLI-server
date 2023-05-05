@@ -1,7 +1,6 @@
 package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import communication.chatgpt.dto.SummarizeRequest;
 import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.completions.request.CompletionsRequestDto;
 import lombok.RequiredArgsConstructor;
@@ -45,7 +44,8 @@ public class OpenAiController {
     }
 
     @PostMapping("/summarize")
-    public String summarize(@RequestBody SummarizeRequest request) {
-        return "summarize";
+    public HttpEntity<String> summarize(@RequestBody CompletionsRequestDto request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.summarizeParsed(request);
+        return openAiResponseEntity.summarizeParsed(openAiRequest);
     }
 }
