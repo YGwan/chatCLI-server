@@ -6,7 +6,8 @@ public enum Completions {
     MODEL("text-davinci-003"),
     GRAMMAR_CHECK("Correct this to standard English:\n"),
     TWEET_CLASSIFIER("Classify the sentiment in these tweets:\n"),
-    TRANSLATE("Translate this into Korean\n");
+    TRANSLATE("Translate this into Korean\n"),
+    SUMMARIZE("\nTl;dr");
 
     private final String data;
 
