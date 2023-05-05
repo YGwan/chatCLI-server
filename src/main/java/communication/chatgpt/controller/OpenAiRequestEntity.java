@@ -9,8 +9,6 @@ import communication.chatgpt.dto.chat.request.ChatRequestDto;
 import communication.chatgpt.dto.chat.response.ChatMessageDto;
 import communication.chatgpt.dto.completions.request.CompletionsParsedRequestDto;
 import communication.chatgpt.dto.completions.request.CompletionsRequestDto;
-import communication.chatgpt.dto.summary.request.SummarizeParsedRequestDto;
-import communication.chatgpt.dto.summary.request.SummarizeRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -74,13 +72,13 @@ public class OpenAiRequestEntity {
         return new HttpEntity<>(tweetClassifierOpenAiBody, headers);
     }
 
-    public HttpEntity<String> summarizeParsed(SummarizeRequestDto summarizeRequest) throws JsonProcessingException {
+    public HttpEntity<String> summarizeParsed(CompletionsRequestDto completionsRequest) throws JsonProcessingException {
         String summarizeOpenAiBody = objectMapper.
                 writeValueAsString(
-                        new SummarizeParsedRequestDto(
+                        new CompletionsParsedRequestDto(
                                 Completions.MODEL.data(),
-                                summarizeRequest.getPrompt() + "Tl;dr",
-                                summarizeRequest.getPrompt().length() * 2
+                                completionsRequest.getPrompt() + "Tl;dr",
+                                completionsRequest.getPrompt().length() * 2
                         )
                 );
         return new HttpEntity<>(summarizeOpenAiBody, headers);
