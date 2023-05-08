@@ -127,4 +127,25 @@ class ChatControllerTest {
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
     }
+
+    @Test
+    @DisplayName("summarize 테스트")
+    public void summarize_Test() throws Exception {
+        // given
+        String prompt = "I want to go korea. I want to go Japan. I want to go USA.";
+        CompletionsParsedRequestDto completionsParsedRequestDto = new CompletionsParsedRequestDto(Completions.MODEL.data(),Completions.SUMMARIZE.data()+prompt,prompt.length()*2);
+        String body = om.writeValueAsString(completionsParsedRequestDto);
+
+        // when
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+        ResponseEntity<String> response = rt.exchange("/v1/summarize", HttpMethod.POST, request, String.class);
+        HttpStatus statusCode = response.getStatusCode();
+
+        // then
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String answer = dc.read("$");
+
+        assertEquals(HttpStatus.OK, statusCode);
+        assertNotNull(answer);
+    }
 }
