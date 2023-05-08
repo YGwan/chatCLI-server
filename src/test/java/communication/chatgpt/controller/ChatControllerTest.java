@@ -85,4 +85,25 @@ class ChatControllerTest {
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
     }
+
+    @Test
+    @DisplayName("mood 테스트")
+    public void mood_Test() throws Exception {
+        // given
+        String prompt = "I love you";
+        CompletionsParsedRequestDto completionsParsedRequestDto = new CompletionsParsedRequestDto(Completions.MODEL.data(),Completions.TWEET_CLASSIFIER.data()+prompt,prompt.length()*2);
+        String body = om.writeValueAsString(completionsParsedRequestDto);
+
+        // when
+        HttpEntity<String> request = new HttpEntity<>(body, headers);
+        ResponseEntity<String> response = rt.exchange("/v1/mood", HttpMethod.POST, request, String.class);
+        HttpStatus statusCode = response.getStatusCode();
+
+        // then
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String answer = dc.read("$");
+
+        assertEquals(HttpStatus.OK, statusCode);
+        assertNotNull(answer);
+    }
 }
