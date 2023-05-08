@@ -70,18 +70,17 @@ class ChatControllerTest {
     public void grammarCheck_Test() throws Exception {
         // given
         String prompt = "What day of the wek is it?";
-        CompletionsParsedRequestDto completionsParsedRequestDto = new CompletionsParsedRequestDto(Completions.MODEL.data(),prompt,prompt.length());
+        CompletionsParsedRequestDto completionsParsedRequestDto = new CompletionsParsedRequestDto(Completions.MODEL.data(),Completions.GRAMMAR_CHECK.data()+prompt,prompt.length()*2);
         String body = om.writeValueAsString(completionsParsedRequestDto);
 
         // when
         HttpEntity<String> request = new HttpEntity<>(body, headers);
         ResponseEntity<String> response = rt.exchange("/v1/gc", HttpMethod.POST, request, String.class);
         HttpStatus statusCode = response.getStatusCode();
-        System.out.println(response);
 
         // then
         DocumentContext dc = JsonPath.parse(response.getBody());
-        String answer = dc.read("$.prompt");
+        String answer = dc.read("$");
 
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
