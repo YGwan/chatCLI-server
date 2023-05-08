@@ -25,22 +25,17 @@ public class OpenAiResponseEntity {
         ResponseEntity<String> response = rt.exchange(Chat.CHAT_ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
         OpenAiChatResponseDto openAiChatResponseDto = objectMapper.readValue(response.getBody(), OpenAiChatResponseDto.class);
         String openAiMessage = openAiChatResponseDto.getChoices().get(0).getMessage().getContent().trim();
-        UserResponse userResponse = UserResponse.of(openAiMessage);
-        return ResponseEntity.ok(userResponse.answer());
+        return getUserResponseEntity(openAiMessage);
     }
 
     public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        return getStringResponseEntityCompletion(openAiRequest);
-    }
-
-    private ResponseEntity<String> getStringResponseEntityCompletion(HttpEntity<String> openAiRequest) throws JsonProcessingException {
         ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
         CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
         String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();
-        return getStringResponseEntity(openAiMessage);
+        return getUserResponseEntity(openAiMessage);
     }
 
-    private static ResponseEntity<String> getStringResponseEntity(String openAiMessage) {
+    private ResponseEntity<String> getUserResponseEntity(String openAiMessage) {
         UserResponse userResponse = UserResponse.of(openAiMessage);
         return ResponseEntity.ok(userResponse.answer());
     }

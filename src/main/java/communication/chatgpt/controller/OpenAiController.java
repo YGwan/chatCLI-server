@@ -4,10 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,15 +14,27 @@ public class OpenAiController {
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
 
+    private String chatRequest = "";
+
     @PostMapping("/chat/completions")
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
-        HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(request);
-        return openAiResponseEntity.chatParsed(openAiRequest);
+        chatRequest = chatRequest + request;
+        HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest);
+        ResponseEntity<String> stringResponseEntity = openAiResponseEntity.chatParsed(openAiRequest);
+        chatRequest = chatRequest + stringResponseEntity.getBody();
+        return stringResponseEntity;
+    }
+
+    @GetMapping("/chat/reset")
+    public ResponseEntity<String> chatQuestionReset() {
+        chatRequest = "";
+        return ResponseEntity.ok("success");
     }
 
     @PostMapping("/gc")
     public ResponseEntity<String> grammarCheck(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
+        System.out.println(openAiRequest.getBody());
         return openAiResponseEntity.completionsParsed(openAiRequest);
     }
 
