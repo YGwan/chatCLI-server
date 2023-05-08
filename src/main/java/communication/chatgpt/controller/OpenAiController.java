@@ -20,9 +20,9 @@ public class OpenAiController {
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
         chatRequest = chatRequest + request;
         HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest);
-        ResponseEntity<String> stringResponseEntity = openAiResponseEntity.chatParsed(openAiRequest);
-        chatRequest = chatRequest + stringResponseEntity.getBody();
-        return stringResponseEntity;
+        ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest);
+        chatRequest = chatRequest + openAiResponseEntity.getBody();
+        return openAiResponseEntity;
     }
 
     @GetMapping("/chat/reset")
