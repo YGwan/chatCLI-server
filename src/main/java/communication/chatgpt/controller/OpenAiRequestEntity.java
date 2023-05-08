@@ -22,7 +22,6 @@ public class OpenAiRequestEntity {
     private final HttpHeaders headers;
 
     public HttpEntity<String> chatParsed(String content) throws JsonProcessingException {
-
         ChatMessageDto chatMessageDto = new ChatMessageDto(Chat.ROLE.data(), content);
 
         String chatOpenAiBody = objectMapper.
