@@ -44,6 +44,6 @@ public class OpenAiController {
     @PostMapping("/summarize")
     public HttpEntity<String> summarize(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.summarizeParsed(request);
-        return openAiResponseEntity.summarizeParsed(openAiRequest);
+        return openAiResponseEntity.completionsParsed(openAiRequest);
     }
 }
