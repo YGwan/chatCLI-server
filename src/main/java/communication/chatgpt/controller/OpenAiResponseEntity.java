@@ -28,6 +28,7 @@ public class OpenAiResponseEntity {
         UserResponse userResponse = UserResponse.of(openAiMessage);
         return ResponseEntity.ok(userResponse.answer());
     }
+
     public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
         return getStringResponseEntityCompletion(openAiRequest);
     }
