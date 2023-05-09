@@ -20,7 +20,6 @@ class OpenAiControllerTest {
     private TestRestTemplate rt;
 
     private final String question = "Hello !";
-    private String Request = "";
     private static HttpHeaders headers;
 
     @BeforeAll
@@ -32,8 +31,7 @@ class OpenAiControllerTest {
     @Test
     @DisplayName("chat api 테스트")
     public void chatApi_Test() {
-        Request += question;
-        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        HttpEntity<String> terminalRequest = new HttpEntity<>(question, headers);
         ResponseEntity<String> response = rt.exchange("/v1/chat/completions", HttpMethod.POST, terminalRequest, String.class);
         HttpStatus statusCode = response.getStatusCode();
 
@@ -47,8 +45,7 @@ class OpenAiControllerTest {
     @Test
     @DisplayName("grammar check api 테스트")
     public void grammarCheck_Test() {
-        Request += question;
-        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        HttpEntity<String> terminalRequest = new HttpEntity<>(question, headers);
         ResponseEntity<String> response = rt.exchange("/v1/gc", HttpMethod.POST, terminalRequest, String.class);
         HttpStatus statusCode = response.getStatusCode();
 
@@ -62,8 +59,7 @@ class OpenAiControllerTest {
     @Test
     @DisplayName("tweet classifier api 테스트")
     public void tweetClassifier_Test() {
-        Request += question;
-        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        HttpEntity<String> terminalRequest = new HttpEntity<>(question, headers);
         ResponseEntity<String> response = rt.exchange("/v1/mood", HttpMethod.POST, terminalRequest, String.class);
         HttpStatus statusCode = response.getStatusCode();
 
@@ -77,8 +73,7 @@ class OpenAiControllerTest {
     @Test
     @DisplayName("translate api 테스트")
     public void translate_Test() {
-        Request += question;
-        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        HttpEntity<String> terminalRequest = new HttpEntity<>(question, headers);
         ResponseEntity<String> response = rt.exchange("/v1/trans", HttpMethod.POST, terminalRequest, String.class);
         HttpStatus statusCode = response.getStatusCode();
 
@@ -92,8 +87,7 @@ class OpenAiControllerTest {
     @Test
     @DisplayName("summarize api 테스트")
     public void summarize_Test() {
-        Request += question;
-        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        HttpEntity<String> terminalRequest = new HttpEntity<>(question, headers);
         ResponseEntity<String> response = rt.exchange("/v1/summarize", HttpMethod.POST, terminalRequest, String.class);
         HttpStatus statusCode = response.getStatusCode();
 
