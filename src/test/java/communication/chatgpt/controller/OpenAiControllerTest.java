@@ -58,4 +58,20 @@ class OpenAiControllerTest {
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
     }
+
+    @Test
+    @DisplayName("tweet classifier api 테스트")
+    public void tweetClassifier_Test() {
+        Request += question;
+        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        ResponseEntity<String> response = rt.exchange("/v1/mood", HttpMethod.POST, terminalRequest, String.class);
+        HttpStatus statusCode = response.getStatusCode();
+
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String answer = dc.read("$");
+        System.out.println(answer);
+
+        assertEquals(HttpStatus.OK, statusCode);
+        assertNotNull(answer);
+    }
 }
