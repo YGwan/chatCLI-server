@@ -69,7 +69,6 @@ class OpenAiControllerTest {
 
         DocumentContext dc = JsonPath.parse(response.getBody());
         String answer = dc.read("$");
-        System.out.println(answer);
 
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
