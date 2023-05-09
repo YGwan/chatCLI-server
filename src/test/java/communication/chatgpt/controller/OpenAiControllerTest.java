@@ -43,4 +43,19 @@ class OpenAiControllerTest {
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
     }
+
+    @Test
+    @DisplayName("grammar check api 테스트")
+    public void grammarCheck_Test() {
+        Request += question;
+        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        ResponseEntity<String> response = rt.exchange("/v1/gc", HttpMethod.POST, terminalRequest, String.class);
+        HttpStatus statusCode = response.getStatusCode();
+
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String answer = dc.read("$");
+
+        assertEquals(HttpStatus.OK, statusCode);
+        assertNotNull(answer);
+    }
 }
