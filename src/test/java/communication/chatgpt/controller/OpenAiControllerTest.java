@@ -20,7 +20,7 @@ class OpenAiControllerTest {
     private TestRestTemplate rt;
 
     private final String question = "Hello !";
-    private String chatRequest = "";
+    private String Request = "";
     private static HttpHeaders headers;
 
     @BeforeAll
@@ -32,8 +32,8 @@ class OpenAiControllerTest {
     @Test
     @DisplayName("chat api 테스트")
     public void chatApi_Test() {
-        chatRequest += question;
-        HttpEntity<String> terminalRequest = new HttpEntity<>(chatRequest, headers);
+        Request += question;
+        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
         ResponseEntity<String> response = rt.exchange("/v1/chat/completions", HttpMethod.POST, terminalRequest, String.class);
         HttpStatus statusCode = response.getStatusCode();
 
