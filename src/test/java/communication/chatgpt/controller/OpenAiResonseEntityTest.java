@@ -23,7 +23,7 @@ class OpenAiResponseEntityTest {
 
     private final String question = "question";
 
-    @DisplayName("질문하기 명령어 응답 패킷 테스트")
+    @DisplayName("질문하기 명령어 응답 패킷이 제대로 처리가 되었는지 테스트")
     @Test
     void chatParsed() throws JsonProcessingException {
         HttpEntity<String> openAiRequestPacket = openAiRequestEntity.chatParsed(question);
@@ -31,7 +31,7 @@ class OpenAiResponseEntityTest {
         Assertions.assertThat(parsedOpenAiResponse.chatParsed(openAiResponsePacket)).isNotNull();
     }
 
-    @DisplayName("문법 검사 명령어 요청 패킷 테스트")
+    @DisplayName("문법 검사 명령어 응답 패킷이 제대로 처리가 되었는지 테스트")
     @Test
     void grammarCheckParsed() throws JsonProcessingException {
         HttpEntity<String> openAiRequestPacket = openAiRequestEntity.grammarCheckParsed(question);
@@ -39,7 +39,7 @@ class OpenAiResponseEntityTest {
         Assertions.assertThat(parsedOpenAiResponse.completionsParsed(openAiResponsePacket)).isNotNull();
     }
 
-    @DisplayName("번역 명령어 요청 패킷 테스트")
+    @DisplayName("번역 명령어 응답 패킷이 제대로 처리가 되었는지 테스트")
     @Test
     void translateParsed() throws JsonProcessingException {
         HttpEntity<String> openAiRequestPacket = openAiRequestEntity.translateParsed(question);
@@ -47,7 +47,7 @@ class OpenAiResponseEntityTest {
         Assertions.assertThat(parsedOpenAiResponse.completionsParsed(openAiResponsePacket)).isNotNull();
     }
 
-    @DisplayName("감정 분석 명령어 요청 패킷 테스트")
+    @DisplayName("감정 분석 명령어 응답 패킷이 제대로 처리가 되었는지 테스트")
     @Test
     void tweetClassifierParsed() throws JsonProcessingException {
         HttpEntity<String> openAiRequestPacket = openAiRequestEntity.tweetClassifierParsed(question);
@@ -55,7 +55,7 @@ class OpenAiResponseEntityTest {
         Assertions.assertThat(parsedOpenAiResponse.completionsParsed(openAiResponsePacket)).isNotNull();
     }
 
-    @DisplayName("요약 명령어 요청 패킷 테스트")
+    @DisplayName("요약 명령어 응답 패킷이 제대로 처리가 되었는지 테스트")
     @Test
     void summarizeParsed() throws JsonProcessingException {
         HttpEntity<String> openAiRequestPacket = openAiRequestEntity.summarizeParsed(question);
