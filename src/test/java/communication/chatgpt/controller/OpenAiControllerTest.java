@@ -89,4 +89,19 @@ class OpenAiControllerTest {
         assertEquals(HttpStatus.OK, statusCode);
         assertNotNull(answer);
     }
+
+    @Test
+    @DisplayName("summarize api 테스트")
+    public void summarize_Test() {
+        Request += question;
+        HttpEntity<String> terminalRequest = new HttpEntity<>(Request, headers);
+        ResponseEntity<String> response = rt.exchange("/v1/summarize", HttpMethod.POST, terminalRequest, String.class);
+        HttpStatus statusCode = response.getStatusCode();
+
+        DocumentContext dc = JsonPath.parse(response.getBody());
+        String answer = dc.read("$");
+
+        assertEquals(HttpStatus.OK, statusCode);
+        assertNotNull(answer);
+    }
 }
