@@ -1,9 +1,12 @@
 package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import communication.chatgpt.exception.ChatGptException;
+import communication.chatgpt.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
