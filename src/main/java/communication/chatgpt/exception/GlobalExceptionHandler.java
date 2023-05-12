@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 
 @Slf4j
 @RestControllerAdvice
@@ -19,6 +20,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> hmnrExceptionHandler(HttpMessageNotReadableException e) {
+        log.error(e.getMessage());
+        return error(new ChatGptException(ErrorCode.INPUT_NOT_FOUND));
+    }
+
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<String> msrpExceptionHandler(MissingServletRequestPartException e) {
         log.error(e.getMessage());
         return error(new ChatGptException(ErrorCode.INPUT_NOT_FOUND));
     }
