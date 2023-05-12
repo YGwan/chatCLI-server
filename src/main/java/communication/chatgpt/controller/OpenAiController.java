@@ -34,7 +34,6 @@ public class OpenAiController {
     @PostMapping("/gc")
     public ResponseEntity<String> grammarCheck(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
-        System.out.println(openAiRequest.getBody());
         return openAiResponseEntity.completionsParsed(openAiRequest);
     }
 
