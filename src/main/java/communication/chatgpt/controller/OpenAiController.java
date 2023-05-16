@@ -1,6 +1,7 @@
 package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import communication.chatgpt.service.KeywordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,6 +18,7 @@ public class OpenAiController {
 
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
+    private final KeywordService keywordService;
 
     private String chatRequest = "";
 
@@ -63,5 +66,11 @@ public class OpenAiController {
     public HttpEntity<String> transcriptions(@RequestPart("file") MultipartFile file) throws IOException {
         HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = openAiRequestEntity.transcriptionParsed(file);
         return openAiResponseEntity.transcriptionParsed(multiValueMapHttpEntity);
+    }
+    @PostMapping("/keywords")
+    public String keywords(@RequestBody String request) throws JsonProcessingException {
+        List<String> parse = keywordService.parse(request);
+        String result = String.join("\n",parse);
+        return result;
     }
 }
