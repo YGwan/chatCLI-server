@@ -59,7 +59,6 @@ public class OpenAiRequestEntity {
                         )
                 );
         return new HttpEntity<>(translateOpenAiBody, headers);
-
     }
 
     public HttpEntity<String> tweetClassifierParsed(String prompt) throws JsonProcessingException {
@@ -87,13 +86,10 @@ public class OpenAiRequestEntity {
     }
 
     public HttpEntity<MultiValueMap<String, Object>> transcriptionParsed(MultipartFile file) {
+        MultiValueMap<String, Object> transcriptionOpenAiBody = new LinkedMultiValueMap<>();
+        transcriptionOpenAiBody.add("file", file.getResource());
+        transcriptionOpenAiBody.add("model", Transcription.MODEL.data());
 
-        MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
-        requestBody.add("file", file.getResource());
-        requestBody.add("model", Transcription.MODEL.data());
-
-        HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = new HttpEntity<>(requestBody, formHeaders);
-
-        return multiValueMapHttpEntity;
+        return new HttpEntity<>(transcriptionOpenAiBody, formHeaders);
     }
 }
