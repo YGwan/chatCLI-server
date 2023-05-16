@@ -7,7 +7,8 @@ public enum Completions {
     GRAMMAR_CHECK("Correct this to standard English:\n"),
     TWEET_CLASSIFIER("Classify the sentiment in these tweets:\n"),
     TRANSLATE("Translate this into Korean\n"),
-    SUMMARIZE("\nTl;dr");
+    SUMMARIZE("\nTl;dr"),
+    KEY_WORD("Extract keywords from this text:\n");
 
     private final String data;
 
