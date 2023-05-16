@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
 import communication.chatgpt.data.Completions;
+import communication.chatgpt.data.Transcription;
 import communication.chatgpt.dto.chat.request.ChatParsedRequestDto;
 import communication.chatgpt.dto.chat.response.ChatMessageDto;
 import communication.chatgpt.dto.completions.request.CompletionsParsedRequestDto;
@@ -11,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collections;
 
@@ -20,6 +24,7 @@ public class OpenAiRequestEntity {
 
     private final ObjectMapper objectMapper;
     private final HttpHeaders headers;
+    private final HttpHeaders formHeaders;
 
     public HttpEntity<String> chatParsed(String content) throws JsonProcessingException {
         ChatMessageDto chatMessageDto = new ChatMessageDto(Chat.ROLE.data(), content);
@@ -54,7 +59,6 @@ public class OpenAiRequestEntity {
                         )
                 );
         return new HttpEntity<>(translateOpenAiBody, headers);
-
     }
 
     public HttpEntity<String> tweetClassifierParsed(String prompt) throws JsonProcessingException {
@@ -79,5 +83,13 @@ public class OpenAiRequestEntity {
                         )
                 );
         return new HttpEntity<>(summarizeOpenAiBody, headers);
+    }
+
+    public HttpEntity<MultiValueMap<String, Object>> transcriptionParsed(MultipartFile file) {
+        MultiValueMap<String, Object> transcriptionOpenAiBody = new LinkedMultiValueMap<>();
+        transcriptionOpenAiBody.add("file", file.getResource());
+        transcriptionOpenAiBody.add("model", Transcription.MODEL.data());
+
+        return new HttpEntity<>(transcriptionOpenAiBody, formHeaders);
     }
 }

@@ -31,4 +31,12 @@ public class SpringConfig {
         headers.setBearerAuth(token);
         return headers;
     }
+
+    @Bean
+    public HttpHeaders formHeaders() {
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.MULTIPART_FORM_DATA);
+        headers.setBearerAuth(token);
+        return headers;
+    }
 }

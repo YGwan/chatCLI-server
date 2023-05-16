@@ -4,7 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -33,6 +36,7 @@ public class OpenAiController {
 
     @PostMapping("/gc")
     public ResponseEntity<String> grammarCheck(@RequestBody String request) throws JsonProcessingException {
+        System.out.println(request);
         HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
         return openAiResponseEntity.completionsParsed(openAiRequest);
     }
@@ -53,5 +57,11 @@ public class OpenAiController {
     public HttpEntity<String> summarize(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.summarizeParsed(request);
         return openAiResponseEntity.completionsParsed(openAiRequest);
+    }
+
+    @PostMapping("/audio/transcriptions")
+    public HttpEntity<String> transcriptions(@RequestPart("file") MultipartFile file) throws IOException {
+        HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = openAiRequestEntity.transcriptionParsed(file);
+        return openAiResponseEntity.transcriptionParsed(multiValueMapHttpEntity);
     }
 }
