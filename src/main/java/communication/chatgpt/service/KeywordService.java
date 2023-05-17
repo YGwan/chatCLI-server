@@ -23,7 +23,7 @@ public class KeywordService {
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
     @Transactional
-    public List<String> parse(String request) throws JsonProcessingException {
+    public void parse(String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.keywordsParsed(request);
         String keywordsParsed = openAiResponseEntity.keywordsParsed(openAiRequest);
         String[] lines = keywordsParsed.split("\n");
@@ -52,8 +52,9 @@ public class KeywordService {
                 keywordRepository.save(build);
             }
         }
+    }
 
-        List<String> limitedResults = keywordRepository.findTop5ByCountDesc(PageRequest.of(0, 5));
-        return limitedResults;
+    public List<String> popularKeywords(){
+        return keywordRepository.findTop5ByCountDesc(PageRequest.of(0, 5));
     }
 }

@@ -24,6 +24,7 @@ public class OpenAiController {
 
     @PostMapping("/chat/completions")
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
+        keywordService.parse(request);
         chatRequest = chatRequest + request;
         HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest);
         ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest);
@@ -39,7 +40,6 @@ public class OpenAiController {
 
     @PostMapping("/gc")
     public ResponseEntity<String> grammarCheck(@RequestBody String request) throws JsonProcessingException {
-        System.out.println(request);
         HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
         return openAiResponseEntity.completionsParsed(openAiRequest);
     }
@@ -67,10 +67,10 @@ public class OpenAiController {
         HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = openAiRequestEntity.transcriptionParsed(file);
         return openAiResponseEntity.transcriptionParsed(multiValueMapHttpEntity);
     }
-    @PostMapping("/keywords")
-    public String keywords(@RequestBody String request) throws JsonProcessingException {
-        List<String> parse = keywordService.parse(request);
-        String result = String.join("\n",parse);
+    @GetMapping("/keywords")
+    public String keywords() {
+        List<String> data = keywordService.popularKeywords();
+        String result = String.join("\n",data);
         return result;
     }
 }
