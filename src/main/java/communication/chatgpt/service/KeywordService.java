@@ -22,29 +22,27 @@ public class KeywordService {
     private final KeywordRepository keywordRepository;
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
+
     @Transactional
     public void parse(String request) throws JsonProcessingException {
+        request = getRequest(request);
         HttpEntity<String> openAiRequest = openAiRequestEntity.keywordsParsed(request);
         String keywordsParsed = openAiResponseEntity.keywordsParsed(openAiRequest);
-        String[] lines = keywordsParsed.split("\n");
+        keywordsParsed = keywordsParsed.replaceAll("Keywords: ", "");
         List<String> list = new ArrayList<>();
 
-        for (String line : lines) {
-            String[] items = line.split(",");
-            for (String item : items) {
-                String s = item.replaceAll("-", "");
-                String cleanItem = s.trim();
-                list.add(cleanItem);
-            }
+        String[] items = keywordsParsed.split(",");
+        for (String item : items) {
+            String cleanItem = item.trim();
+            list.add(cleanItem);
         }
 
         List<String> all = keywordRepository.findAllKeyword();
-        for(String value : list){
-            if(all.contains(value)){
+        for (String value : list) {
+            if (all.contains(value)) {
                 Keyword checkWord = keywordRepository.findByKeyword(value);
-                checkWord.setCount(checkWord.getCount()+1);
-            }
-            else{
+                checkWord.setCount(checkWord.getCount() + 1);
+            } else {
                 Keyword build = Keyword.builder()
                         .keyword(value)
                         .count(1)
@@ -54,7 +52,14 @@ public class KeywordService {
         }
     }
 
-    public List<String> popularKeywords(){
+    private static String getRequest(String request) {
+        StringBuilder sb = new StringBuilder(request);
+        sb.append("\n");
+        sb.append(sb);
+        return sb.toString();
+    }
+
+    public List<String> popularKeywords() {
         return keywordRepository.findTop5ByCountDesc(PageRequest.of(0, 5));
     }
 }
