@@ -22,14 +22,20 @@ public class OpenAiController {
 
     private String chatRequest = "";
 
-    @PostMapping("/chat/completions")
+    @PostMapping("/chat/")
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
-        keywordService.parse(request);
+        setKeyword(request);
         chatRequest = chatRequest + request;
         HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest);
         ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest);
         chatRequest = chatRequest + openAiResponseEntity.getBody();
         return openAiResponseEntity;
+    }
+
+    private void setKeyword(String request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.keywordsParsed(request);
+        String keywordsParsed = openAiResponseEntity.keywordsParsed(openAiRequest);
+        keywordService.parse(keywordsParsed);
     }
 
     @GetMapping("/chat/reset")
@@ -67,10 +73,10 @@ public class OpenAiController {
         HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = openAiRequestEntity.transcriptionParsed(file);
         return openAiResponseEntity.transcriptionParsed(multiValueMapHttpEntity);
     }
+
     @GetMapping("/keywords")
     public String keywords() {
         List<String> data = keywordService.popularKeywords();
-        String result = String.join("\n",data);
-        return result;
+        return String.join("\n",data);
     }
 }

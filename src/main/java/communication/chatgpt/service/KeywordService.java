@@ -1,13 +1,9 @@
 package communication.chatgpt.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import communication.chatgpt.controller.OpenAiRequestEntity;
-import communication.chatgpt.controller.OpenAiResponseEntity;
 import communication.chatgpt.entity.Keyword;
 import communication.chatgpt.repository.KeywordRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +16,9 @@ import java.util.List;
 public class KeywordService {
 
     private final KeywordRepository keywordRepository;
-    private final OpenAiResponseEntity openAiResponseEntity;
-    private final OpenAiRequestEntity openAiRequestEntity;
 
     @Transactional
-    public void parse(String request) throws JsonProcessingException {
-        request = getRequest(request);
-        HttpEntity<String> openAiRequest = openAiRequestEntity.keywordsParsed(request);
-        String keywordsParsed = openAiResponseEntity.keywordsParsed(openAiRequest);
+    public void parse(String keywordsParsed) {
         keywordsParsed = keywordsParsed.replaceAll("Keywords: ", "");
         List<String> list = new ArrayList<>();
 
@@ -50,13 +41,6 @@ public class KeywordService {
                 keywordRepository.save(build);
             }
         }
-    }
-
-    private static String getRequest(String request) {
-        StringBuilder sb = new StringBuilder(request);
-        sb.append("\n");
-        sb.append(sb);
-        return sb.toString();
     }
 
     public List<String> popularKeywords() {

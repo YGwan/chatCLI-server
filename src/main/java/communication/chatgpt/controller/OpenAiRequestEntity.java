@@ -97,6 +97,8 @@ public class OpenAiRequestEntity {
     }
 
     public HttpEntity<String> keywordsParsed(String prompt) throws JsonProcessingException {
+        prompt = getParsingKeywordPrompt(prompt);
+
         String translateOpenAiBody = objectMapper.
                 writeValueAsString(
                         new CompletionsParsedRequestDto(
@@ -106,5 +108,12 @@ public class OpenAiRequestEntity {
                         )
                 );
         return new HttpEntity<>(translateOpenAiBody, headers);
+    }
+
+    private String getParsingKeywordPrompt(String prompt) {
+        StringBuilder sb = new StringBuilder(prompt);
+        sb.append("\n");
+        sb.append(sb);
+        return sb.toString();
     }
 }
