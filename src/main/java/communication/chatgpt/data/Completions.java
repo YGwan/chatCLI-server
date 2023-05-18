@@ -8,7 +8,7 @@ public enum Completions {
     TWEET_CLASSIFIER("Classify the sentiment in these tweets:\n"),
     TRANSLATE("Translate this into Korean\n"),
     SUMMARIZE("\nTl;dr"),
-    KEY_WORD("Extract keywords from this text:\n");
+    KEYWORD("Extract keywords from this text:\n");
 
     private final String data;
 

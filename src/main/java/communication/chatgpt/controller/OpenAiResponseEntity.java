@@ -48,8 +48,7 @@ public class OpenAiResponseEntity {
     public String keywordsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
         ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
         CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
-        String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();
-        return openAiMessage;
+        return completionsResponseDto.getChoices().get(0).getText().trim();
     }
 
     private ResponseEntity<String> getUserResponseEntity(String openAiMessage) {

@@ -19,27 +19,31 @@ public class KeywordService {
 
     @Transactional
     public void parse(String keywordsParsed) {
-        keywordsParsed = keywordsParsed.replaceAll("Keywords: ", "");
-        List<String> list = new ArrayList<>();
+        String[] keywordList = keywordsParsed.replaceAll("Keywords: ", "").split(",");
 
-        String[] items = keywordsParsed.split(",");
-        for (String item : items) {
-            String cleanItem = item.trim();
-            list.add(cleanItem);
+        List<String> keywords = new ArrayList<>();
+        for (String keyword : keywordList) {
+            keywords.add(keyword.trim());
         }
 
-        List<String> all = keywordRepository.findAllKeyword();
-        for (String value : list) {
-            if (all.contains(value)) {
-                Keyword checkWord = keywordRepository.findByKeyword(value);
-                checkWord.setCount(checkWord.getCount() + 1);
-            } else {
-                Keyword build = Keyword.builder()
-                        .keyword(value)
-                        .count(1)
-                        .build();
-                keywordRepository.save(build);
-            }
+        List<String> storedKeywords = keywordRepository.findAllKeyword();
+
+        for (String keyword : keywords) {
+            updateKeywordAndCount(storedKeywords, keyword);
+        }
+    }
+
+    private void updateKeywordAndCount(List<String> storedKeywords, String keyword) {
+        if (storedKeywords.contains(keyword)) {
+            Keyword alreadyStoredKeyword = keywordRepository.findByKeyword(keyword);
+            alreadyStoredKeyword.setCount(alreadyStoredKeyword.getCount() + 1);
+            keywordRepository.save(alreadyStoredKeyword);
+        } else {
+            Keyword newKeyword = Keyword.builder()
+                    .keyword(keyword)
+                    .count(1)
+                    .build();
+            keywordRepository.save(newKeyword);
         }
     }
 

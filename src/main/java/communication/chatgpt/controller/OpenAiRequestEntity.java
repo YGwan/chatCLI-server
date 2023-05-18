@@ -86,14 +86,11 @@ public class OpenAiRequestEntity {
     }
 
     public HttpEntity<MultiValueMap<String, Object>> transcriptionParsed(MultipartFile file) {
-
         MultiValueMap<String, Object> requestBody = new LinkedMultiValueMap<>();
         requestBody.add("file", file.getResource());
         requestBody.add("model", Transcription.MODEL.data());
 
-        HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = new HttpEntity<>(requestBody, formHeaders);
-
-        return multiValueMapHttpEntity;
+        return new HttpEntity<>(requestBody, formHeaders);
     }
 
     public HttpEntity<String> keywordsParsed(String prompt) throws JsonProcessingException {
@@ -103,7 +100,7 @@ public class OpenAiRequestEntity {
                 writeValueAsString(
                         new CompletionsParsedRequestDto(
                                 Completions.MODEL.data(),
-                                Completions.KEY_WORD.data() + prompt,
+                                Completions.KEYWORD.data() + prompt,
                                 prompt.length() * 2
                         )
                 );

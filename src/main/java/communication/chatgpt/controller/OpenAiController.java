@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -77,6 +78,6 @@ public class OpenAiController {
     @GetMapping("/keywords")
     public String keywords() {
         List<String> data = keywordService.popularKeywords();
-        return String.join("\n",data);
+        return String.join("\n", data);
     }
 }
