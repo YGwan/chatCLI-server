@@ -1,13 +1,16 @@
 package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import communication.chatgpt.service.KeywordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -16,16 +19,24 @@ public class OpenAiController {
 
     private final OpenAiResponseEntity openAiResponseEntity;
     private final OpenAiRequestEntity openAiRequestEntity;
+    private final KeywordService keywordService;
 
     private String chatRequest = "";
 
-    @PostMapping("/chat/completions")
+    @PostMapping("/chat/")
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
+        setKeyword(request);
         chatRequest = chatRequest + request;
         HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest);
         ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest);
         chatRequest = chatRequest + openAiResponseEntity.getBody();
         return openAiResponseEntity;
+    }
+
+    private void setKeyword(String request) throws JsonProcessingException {
+        HttpEntity<String> openAiRequest = openAiRequestEntity.keywordsParsed(request);
+        String keywordsParsed = openAiResponseEntity.keywordsParsed(openAiRequest);
+        keywordService.parse(keywordsParsed);
     }
 
     @GetMapping("/chat/reset")
@@ -36,7 +47,6 @@ public class OpenAiController {
 
     @PostMapping("/gc")
     public ResponseEntity<String> grammarCheck(@RequestBody String request) throws JsonProcessingException {
-        System.out.println(request);
         HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
         return openAiResponseEntity.completionsParsed(openAiRequest);
     }
@@ -63,5 +73,11 @@ public class OpenAiController {
     public HttpEntity<String> transcriptions(@RequestPart("file") MultipartFile file) throws IOException {
         HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = openAiRequestEntity.transcriptionParsed(file);
         return openAiResponseEntity.transcriptionParsed(multiValueMapHttpEntity);
+    }
+
+    @GetMapping("/keywords")
+    public String keywords() {
+        List<String> data = keywordService.popularKeywords();
+        return String.join("\n", data);
     }
 }
