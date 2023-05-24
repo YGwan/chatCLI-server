@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ChatgptApplication {
+public class OpenAiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ChatgptApplication.class, args);
+        SpringApplication.run(OpenAiApplication.class, args);
     }
 }
