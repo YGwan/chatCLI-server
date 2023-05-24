@@ -23,7 +23,7 @@ public class OpenAiController {
 
     private String chatRequest = "";
 
-    @PostMapping("/chat/")
+    @PostMapping("/chat")
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
         setKeyword(request);
         chatRequest = chatRequest + request;
