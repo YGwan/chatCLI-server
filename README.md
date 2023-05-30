@@ -1,17 +1,21 @@
 # ChatGPT CLI Command
 
+<br>
+
 ![img](https://github.com/YGwan/spring-chatgpt-communication/assets/50222603/6ad14ef7-3aa6-4d09-a7d8-200c5a47369f)
+
+---
 
 <br>
 
-### Project Topic
+## Project Topic
 
 - Develop servers & commands that enable use of chatgpt in CLI environments (Terminal/Linux environments)
 
 
 <br>
 
-### Project Purpose
+## Project Purpose
 
 - The API request format provided by open API in cli environment is too complicated.
 - The response format to the request sent to open ai api is hard to see at a glance the answer to the question I want.
@@ -19,7 +23,7 @@
 
 <br>
 
-### Expectation effect
+## Expectation effect
 - You do not need to know the complex request format of open ai api.
   - Header, Body format etc..
 - You can use open ai api conveniently in the cli environment.
@@ -27,7 +31,7 @@
 
 <br>
 
-### How to run it
+## How to run it
 
 ```shell
 git clone https://github.com/YGwan/spring-chatgpt-communication.git
@@ -37,7 +41,7 @@ source chatgptCommand.sh
 
 <br>
 
-### Project Structure
+## Project Structure
 <img width="981" alt="스크린샷 2023-05-28 오전 1 42 21" src="https://github.com/YGwan/spring-chatgpt-communication/assets/50222603/3ea07427-4872-4406-aab4-6c0bc5255102">
 
 1. CLI ENV
@@ -64,7 +68,7 @@ source chatgptCommand.sh
 
 <br>
 
-### Core Technology
+## Core Technology
 
 1. ObjectMapper
     - It is a technique used to serialize responses and deserialize requests when using the JSON format.
@@ -104,7 +108,7 @@ source chatgptCommand.sh
 
 <br>
 
-### Support Commands
+## Support Commands
 
 | Command | Command Format | Description |
 |--------|----------------|-----------------------------|
@@ -112,7 +116,7 @@ source chatgptCommand.sh
 |Ask questions |chatAsk -m "Content of questions" |chatgpt and show the answers to the questions.|
 |End of session|chatAsk-clear|End of question session (provides refresh).)|
 |Grammar Check |chatAsk -gc "Question Content" |Grammar Check for English Sentences. Correct the sentence if the grammar is wrong or show the sentence as it is.|
-|voice conversion |chatAsk -at voice file.m4a|When a voice file is sent, the contents of the voice file are displayed in text format.|
+|Voice conversion |chatAsk -at voice file.m4a|When a voice file is sent, the contents of the voice file are displayed in text format.|
 |Emotional Analysis |chatAsk -md "Question Content" |Emotional Analysis for Sentences. Emotional Analysis is classified into three categories: negative, positive, and netal.|
 |Sentence Translation |chatAsk -t "Question Contents" | English sentences are translated into Korean and shown.|
 |Sentence Summary |chatAsk -md "Question Content" |Shows a short summary of the long sentence.|
@@ -120,7 +124,7 @@ source chatgptCommand.sh
 
 <br>
 
-### 지원 환경
+## Support ENV(OS) 
 
 - MacOS
 - Ubuntu
@@ -130,26 +134,27 @@ If you only modify the shell script to the correct format for that OS, it works 
 
 <br>
 
-### version
+## version
 - Spring Boot: 2.7.3
 - java : 11
 
 
 <br>
 
-### Licenses
+## Licenses
 
 MIT
 
 <br>
 
-### References
+## References
 
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html   
 https://platform.openai.com/examples
 
 <br>
 
+<br>
 
 
 
