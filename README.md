@@ -84,5 +84,38 @@
 
 <br>
 
+### 지원 명령어
+
+| 명령어 | 명령어 형식 | 설명 |
+|--------|----------------|-----------------------------|
+|도움말|chatAsk -help|사용자 설명서를 보여준다.|
+|질문하기|chatAsk -m "질문 내용"|chatgpt에 질문하고 질문에 대한 답을 보여준다.|
+|세션 종료|chatAsk -clear|질문 세션 종료(새로 고침 기능을 제공한다.)|
+|문법 확인|chatAsk -gc "질문 내용"|영어 문장에 대한 문법 체크를 해준다. 문법이 틀리면 문장을 고쳐주고 아니면 그대로 문장을 보여준다.|
+|음성 변환|chatAsk -at 음성파일.m4a|음성 파일을 보내면 해당 음성 파일의 내용을 text 형식으로 보여준다.|
+|감정 분석|chatAsk -md "질문 내용"|문장에 대한 감정 분석 기능. 감정 분석은 negative, positive, netral 3가지로 분류돼 보여준다.|
+|문장 번역|chatAsk -t "질문 내용"|영어 문장을 한국어로 번역하여 보여준다.|
+|문장 요약|chatAsk -md "질문 내용"|긴 문장을 짧게 요약해줘서 보여준다.|
+|상위 검색어|chatAsk -rank|사용자들이 주로 질문하는 상위 5개의 질문 키워드를 보여준다. |
+
+<br>
+
+## 실행 방법
+
+```shell
+git clone https://github.com/YGwan/spring-chatgpt-communication.git
+cd spring-chatgpt-communication/shell
+source chatgptCommand.sh 
+```
+
+### 버전
+- Spring boot : 2.7.3
+- java : 11
+
+
+
+
+
+
 
 
