@@ -1,5 +1,7 @@
 # ChatGPT CLI Command
 
+![img](https://github.com/YGwan/spring-chatgpt-communication/assets/50222603/6ad14ef7-3aa6-4d09-a7d8-200c5a47369f)
+
 <br>
 
 ### Project Topic
