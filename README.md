@@ -24,6 +24,16 @@
 
 <br>
 
+### 실행 방법
+
+```shell
+git clone https://github.com/YGwan/spring-chatgpt-communication.git
+cd spring-chatgpt-communication/shell
+source chatgptCommand.sh 
+```
+
+<br>
+
 ### 프로젝트 구조
 <img width="981" alt="스크린샷 2023-05-28 오전 1 42 21" src="https://github.com/YGwan/spring-chatgpt-communication/assets/50222603/3ea07427-4872-4406-aab4-6c0bc5255102">
 
@@ -65,7 +75,7 @@
     - RestTemplate은 간편한 방식으로 HTTP 요청을 만들고 처리할 수 있도록 다양한 메서드를 제공한다.(GET, POST, PUT, DELETE 등)
     - 요청에 필요한 헤더, 매개변수, 본문 등을 설정할 수 있다. 
     - 응답을 받을 때는 응답의 상태 코드, 헤더, 본문 등을 확인할 수 있다.
-    - 후에 해당 기술 대신 WebClient를 사용한 기술도 추가할 예정이다.(Spring 5부터는 RestTemplate 대신 WebClient를 사용하는 것을 권장하기 때문에)
+    - 후에 해당 기술 대신 WebClient를 사용한 기술도 추가할 예정이다.(Spring 5부터는 RestTemplate 대신 WebClient를 사용하는 것을 권장함)
 
 <br>
 
@@ -73,14 +83,18 @@
     - chatgpt에 질문을 하면 CLI 환경에서는 전 질문 내용이 다음 질문과 연결되지 않는 문제가 발생한다.
     - 방법 1 : 질문을 연결한다. -> 질문에 대한 답이 연결이 안되서 이 또한 정상적으로 작동하지 않는다.
     - 방법 2 : 질문 + 해당 질문에 대한 답을 연결한다. -> 정상적으로 작동되는 것을 확인할 수 있다.
-    - ```java
+    
+    <br>
+    
+      ```java
        public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
-            chatRequest = chatRequest + request; // 이전 질문(chatRequest)을 현재 질문 request에 연결한다.
-            HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest); // open ai api 요청 패킷을 만든다.
-            ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest); // 위에서 만든 패킷으로 open ai api에 요청을 보낸 후 결과값을 받아온다.(답만 파싱해서 받는다.)
-            chatRequest = chatRequest + openAiResponseEntity.getBody(); // 답 또한 질문과 연결한다.
-            return openAiResponseEntity;
-        }
+          chatRequest = chatRequest + request; // 이전 질문(chatRequest)을 현재 질문 request에 연결한다.
+          HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest); // open ai api 요청 패킷을 만든다.
+          ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest); // 위에서 만든 패킷으로 open ai api에 요청을 보낸 후 결과값을 받아온다.(답만 파싱해서 받는다.)
+          chatRequest = chatRequest + openAiResponseEntity.getBody(); // 답 또한 질문과 연결한다.
+          return openAiResponseEntity;
+       }
+      ```
 
 <br>
 
@@ -100,19 +114,35 @@
 
 <br>
 
-## 실행 방법
+### 지원 환경
 
-```shell
-git clone https://github.com/YGwan/spring-chatgpt-communication.git
-cd spring-chatgpt-communication/shell
-source chatgptCommand.sh 
-```
+- MacOS
+- Ubuntu
+- Linux
+
+쉘 스크립트만 해당 OS에 맞는 형식으로만 수정하면 다른 OS에서도 문제 없이 동작합니다.
+
+<br>
 
 ### 버전
 - Spring boot : 2.7.3
 - java : 11
 
 
+<br>
+
+### License
+
+MIT
+
+<br>
+
+### 참조 문헌
+
+https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html   
+https://platform.openai.com/examples
+
+<br>
 
 
 
