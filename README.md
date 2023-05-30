@@ -2,29 +2,30 @@
 
 <br>
 
-### 프로젝트 주제
+### Project Topic
 
-- CLI 환경(터미널/리눅스 환경)에서 원활하게 chatgpt를 사용할 수 있는 서버 & 명령어 개발
+- Develop servers & commands that enable use of chatgpt in CLI environments (Terminal/Linux environments)
 
-<br>
-
-### 프로젝트 목적
-
-- open ai api가 cli환경에서 제공하는 api의 요청 형식이 너무 복잡하다.
-- open ai api에 보낸 요청에 대한 응답 형식이 내가 원하는 질문에 대한 답을 한눈에 보기 힘들다.
-- 이를 사용자 편의성을 고려해 쉽게 사용할 수 있는 명령어를 만들자 (chatgpt 사용을 추상화시켜보자)
 
 <br>
 
-### 기대 효과
-- open ai api의 복잡한 요청 형식을 알 필요가 없다.
-  - header, body 형식 등
-- cli환경에서 편하게 open ai api를 사용할 수 있다.
-- open ai ap의 복잡한 응답 형식을 정답만 한눈에 보기 편하다.
+### Project Purpose
+
+- The API request format provided by open API in cli environment is too complicated.
+- The response format to the request sent to open ai api is hard to see at a glance the answer to the question I want.
+- Let's make an easy-to-use command considering user convenience. (Let's abstract the use of chatgpt)
 
 <br>
 
-### 실행 방법
+### Expectation effect
+- You do not need to know the complex request format of open ai api.
+  - Header, Body format etc..
+- You can use open ai api conveniently in the cli environment.
+- It is easy to see the complex response format of open aiap at a glance.
+
+<br>
+
+### How to run it
 
 ```shell
 git clone https://github.com/YGwan/spring-chatgpt-communication.git
@@ -34,55 +35,58 @@ source chatgptCommand.sh
 
 <br>
 
-### 프로젝트 구조
+### Project Structure
 <img width="981" alt="스크린샷 2023-05-28 오전 1 42 21" src="https://github.com/YGwan/spring-chatgpt-communication/assets/50222603/3ea07427-4872-4406-aab4-6c0bc5255102">
 
 1. CLI ENV
-    - 사용자가 원하는 명령어를 실행하는 환경이다.
-    - 질문 형식의 요청을 보내면 질문에 대한 응답을 보여준다.
-    - UI 역할
+    - It is an environment in which the user executes the desired commands.
+    - Send a request in question format and show the response to the question.
+    - UI Roles
 
 <br>
 
 2. Spring Server
-    - 사용자가 요청한 질문을 받고 이를 OpenAi Server가 원하는 형식의 요청 패킷으로 파싱한다.(OpenAiRequestEntity class)
-    - 서버에서 보낸 OpenAi Server 요청에 대한 응답을 사용자가 보기 편한 응답 패킷으로 파싱한다.(OpenAiResponseEntity class)
+    - ake the questions requested by the user and parse them into request packets in the format desired by the OpenAi Server. 
+      - OpenAiRequestEntity class
+    - Parse the response to an OpenAi Server request sent by the server into a user-friendly response packet. 
+      - OpenAiResponseEntity class
+
 
 <br>
 
 3. OpenAi Server
-    - 실제 Open Ai에서 운영하는 서버이다.(chatGPT 서비스를 사용할 수 있는 서버)
-    - 해당 서버에서는 여러 서비스에 대한 api를 제공한다.
-    - [해당 서버 주소](https://platform.openai.com/)에서 더 많은 api를 확인할 수 있다.
+    - It is actually a server operated by Open Ai.(Server with chatGPT service)
+    - The server provides api for several services.
+    - More api can be found at [the corresponding address](https://platform.openai.com/) 
 
 
 <br>
 
-### 핵심 기술
+### Core Technology
 
 1. ObjectMapper
-    - JSON 형식을 사용할 때, 응답들을 직렬화하고 요청들을 역직렬화 할 때 사용하는 기술이다.
-    - 즉, JSON 데이터와 Java 객체 간의 변환을 수행하는 기능을 제공한다.
-    - Jackson 라이브러리의 클래스이다.
-    - JSON 데이터를 Java 객체로 변환할 때는, ObjectMapper 클래스의 readValue() 메서드를 사용한다.
-    - Java 객체를 JSON 데이터로 변환할 때는, ObjectMapper 클래스의 writeValue() 메서드를 사용한다.
+    - It is a technique used to serialize responses and deserialize requests when using the JSON format.
+    - That is, it provides a function of performing conversion between JSON data and Java objects.
+    - Class of Jackson Library.
+    - When converting JSON data to Java objects, use the readValue() method of the ObjectMapper class.
+    - When converting Java objects into JSON data, use the writeValue() method of the ObjectMapper class.
 
 <br>
 
 2. ResTemplate
-    - RESTful 웹 서비스에 대한 HTTP 요청을 보내고 응답을 받아야 할때 사용하는 기술이다.
-    - 즉, 외부 api를 spring에서 사용할때 해당 서버에 요청을 보내고 요청에 대한 응답을 받아야 할때 사용하는 기술이다.
-    - RestTemplate은 간편한 방식으로 HTTP 요청을 만들고 처리할 수 있도록 다양한 메서드를 제공한다.(GET, POST, PUT, DELETE 등)
-    - 요청에 필요한 헤더, 매개변수, 본문 등을 설정할 수 있다. 
-    - 응답을 받을 때는 응답의 상태 코드, 헤더, 본문 등을 확인할 수 있다.
-    - 후에 해당 기술 대신 WebClient를 사용한 기술도 추가할 예정이다.(Spring 5부터는 RestTemplate 대신 WebClient를 사용하는 것을 권장함)
+    - Technology used to send HTTP requests for RESTful web services and receive responses.
+    - In other words, it is a technology that is used when an external API is used in the spring and a request is sent to the server and a response to the request is required.
+    - RestTemplate provides a variety of methods for creating and processing HTTP requests in an easy way.(GET, POST, PUT, DELETE etc..)
+    - Headers, parameters, body, etc. required for the request can be set.
+    - When receiving a response, the status code, header, and body of the response can be checked.
+    - In the future, we will also add technology using WebClient instead of that technology. (Spring 5: RestTemplate Web Client)
 
 <br>
 
-3. chatgpt 질문 세션 유지 방식
-    - chatgpt에 질문을 하면 CLI 환경에서는 전 질문 내용이 다음 질문과 연결되지 않는 문제가 발생한다.
-    - 방법 1 : 질문을 연결한다. -> 질문에 대한 답이 연결이 안되서 이 또한 정상적으로 작동하지 않는다.
-    - 방법 2 : 질문 + 해당 질문에 대한 답을 연결한다. -> 정상적으로 작동되는 것을 확인할 수 있다.
+3. Chatgpt Question Session Maintenance Method
+    - When you ask a question on chatgpt, there is a problem in the CLI environment that the content of the previous question is not connected to the next question.
+    - Method 1: Connect the questions. -> This also does not work normally because the answer to the question is not connected.
+    - Method 2: Connect questions + answers to those questions. -> Check that it is operating normally.
     
     <br>
     
@@ -98,19 +102,19 @@ source chatgptCommand.sh
 
 <br>
 
-### 지원 명령어
+### Support Commands
 
-| 명령어 | 명령어 형식 | 설명 |
+| Command | Command Format | Description |
 |--------|----------------|-----------------------------|
-|도움말|chatAsk -help|사용자 설명서를 보여준다.|
-|질문하기|chatAsk -m "질문 내용"|chatgpt에 질문하고 질문에 대한 답을 보여준다.|
-|세션 종료|chatAsk -clear|질문 세션 종료(새로 고침 기능을 제공한다.)|
-|문법 확인|chatAsk -gc "질문 내용"|영어 문장에 대한 문법 체크를 해준다. 문법이 틀리면 문장을 고쳐주고 아니면 그대로 문장을 보여준다.|
-|음성 변환|chatAsk -at 음성파일.m4a|음성 파일을 보내면 해당 음성 파일의 내용을 text 형식으로 보여준다.|
-|감정 분석|chatAsk -md "질문 내용"|문장에 대한 감정 분석 기능. 감정 분석은 negative, positive, netral 3가지로 분류돼 보여준다.|
-|문장 번역|chatAsk -t "질문 내용"|영어 문장을 한국어로 번역하여 보여준다.|
-|문장 요약|chatAsk -md "질문 내용"|긴 문장을 짧게 요약해줘서 보여준다.|
-|상위 검색어|chatAsk -rank|사용자들이 주로 질문하는 상위 5개의 질문 키워드를 보여준다. |
+|Help|chatAsk-help|Show user manual.|
+|Ask questions |chatAsk -m "Content of questions" |chatgpt and show the answers to the questions.|
+|End of session|chatAsk-clear|End of question session (provides refresh).)|
+|Grammar Check |chatAsk -gc "Question Content" |Grammar Check for English Sentences. Correct the sentence if the grammar is wrong or show the sentence as it is.|
+|voice conversion |chatAsk -at voice file.m4a|When a voice file is sent, the contents of the voice file are displayed in text format.|
+|Emotional Analysis |chatAsk -md "Question Content" |Emotional Analysis for Sentences. Emotional Analysis is classified into three categories: negative, positive, and netal.|
+|Sentence Translation |chatAsk -t "Question Contents" | English sentences are translated into Korean and shown.|
+|Sentence Summary |chatAsk -md "Question Content" |Shows a short summary of the long sentence.|
+|Top search terms|chatAsk-rank|Shows the top five question keywords that users usually ask. |
 
 <br>
 
@@ -120,24 +124,24 @@ source chatgptCommand.sh
 - Ubuntu
 - Linux
 
-쉘 스크립트만 해당 OS에 맞는 형식으로만 수정하면 다른 OS에서도 문제 없이 동작합니다.
+If you only modify the shell script to the correct format for that OS, it works fine for other OS.
 
 <br>
 
-### 버전
-- Spring boot : 2.7.3
+### version
+- Spring Boot: 2.7.3
 - java : 11
 
 
 <br>
 
-### License
+### Licenses
 
 MIT
 
 <br>
 
-### 참조 문헌
+### References
 
 https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html   
 https://platform.openai.com/examples
