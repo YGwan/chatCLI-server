@@ -108,7 +108,7 @@ source chatgptCommand.sh
 
 <br>
 
-## Support Commands
+## Supported Commands
 
 | Command | Command Format | Description |
 |--------|----------------|-----------------------------|
@@ -124,7 +124,7 @@ source chatgptCommand.sh
 
 <br>
 
-## Support ENV(OS) 
+## Supported ENV(OS) 
 
 - MacOS
 - Ubuntu
