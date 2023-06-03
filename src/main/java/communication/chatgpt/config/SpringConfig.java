@@ -11,8 +11,8 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class SpringConfig {
 
-    @Value("${open-ai.token}")
-    private String token;
+    @Value("${open-ai.key}")
+    private String key;
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -28,7 +28,7 @@ public class SpringConfig {
     public HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.setBearerAuth(token);
+        headers.setBearerAuth(key);
         return headers;
     }
 
@@ -36,7 +36,7 @@ public class SpringConfig {
     public HttpHeaders formHeaders() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
-        headers.setBearerAuth(token);
+        headers.setBearerAuth(key);
         return headers;
     }
 }
