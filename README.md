@@ -69,6 +69,7 @@ source chatgptCommand.sh
 <br>
 
 ## Core Technology
+<br>
 
 1. ObjectMapper
     - It is a technique used to serialize responses and deserialize requests when using the JSON format.
@@ -92,7 +93,7 @@ source chatgptCommand.sh
 3. Chatgpt Question Session Maintenance Method
     - When you ask a question on chatgpt, there is a problem in the CLI environment that the content of the previous question is not connected to the next question.
     - Method 1: Connect the questions. -> This also does not work normally because the answer to the question is not connected.
-    - Method 2: Connect questions + answers to those questions. -> Check that it is operating normally.
+    - Method 2: Connect questions + answers to those questions. -> It works normally.
     
     <br>
     
@@ -105,6 +106,16 @@ source chatgptCommand.sh
           return openAiResponseEntity;
        }
       ```
+
+<br>
+
+4. Open ai api server communication(CORS Policy)
+    <br>
+    <img width="842" alt="스크린샷 2023-06-04 오전 9 20 16" src="https://github.com/YGwan/spring-chatgpt-communication/assets/50222603/bc04662d-a026-4d48-8995-4ec052f1a475">
+    <br>
+    - By default, OpenAI servers are open to HTTPS communication.
+    - So if you want to communicate using HTTP, you cannot communicate with the openAI server.
+    - However, since the OpenAI server allowed LOCALHOST communication, it is possible to communicate using LOCALHOST.(LOCALHOST uses HTTP by default)
 
 <br>
 
