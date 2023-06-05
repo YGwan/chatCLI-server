@@ -2,21 +2,17 @@ function usage() {
   echo
   echo "############################## chatgpt user's guide ##############################"
   echo
-  echo "We can use a total of 9 commands served by Open ai."
-  echo
-  echo "Question ----> chatAsk -m \"question\""
-  echo "Remove previous question information(clear Session) ----> chatAsk -clear"
-  echo "Grammar check ----> chatAsk -gc \"sentence\""
-  echo "Convert a voice file to a text file ----> chatAsk -at filename.m4"
-  echo "Sentence Emotion Analysis(Positive, Negative, Neutral) ----> chatAsk -md \"sentence\""
-  echo "Translate English into Korean ----> chatAsk -t \"english sentence\""
-  echo "Sentence Summary ----> chatAsk -s \"sentence\""
-  echo "User Lookup Top 5 Keywords Lookup ----> chatAsk -rank"
-  echo
-  echo "if you want a another service, send devygwan@gmail.com"
-  echo
-  echo "#################################################################################"
-  echo
+  echo "We can use a total of 9 commands served by Open ai. \n"
+  echo "Question ----> chatAsk -m \"question\" \n"
+  echo "Remove previous question information(clear Session) ----> chatAsk -clear \n"
+  echo "Grammar check ----> chatAsk -gc \"sentence\" \n"
+  echo "Convert a voice file to a text file ----> chatAsk -at filename.m4 \n"
+  echo "Sentence Emotion Analysis(Positive, Negative, Neutral) ----> chatAsk -md \"sentence\" \n"
+  echo "Translate English into Korean ----> chatAsk -t \"english sentence\" \n"
+  echo "Sentence Summary ----> chatAsk -s \"sentence\" \n"
+  echo "User Lookup Top 5 Keywords Lookup ----> chatAsk -rank \n"
+  echo "if you want a another service, send devygwan@gmail.com \n"
+  echo "################################################################################# \n"
 }
 
 function chat_command() { 
@@ -59,7 +55,7 @@ function chat_command() {
   if [[ "$OPTION" == "-at" ]]; then 
     curl -X POST -H "Content-Type: multipart/form-data" -F file="${REQUEST_BODY}" "http://${SERVER_IP}:${SERVER_PORT}${REQUEST_PATH}" -w '\n' 
    
-  elif [[ "$OPTION" == "-rank" ]]; then 
+  elif [[ "$OPTION" == "-rank" || "$OPTION" == "-clear" ]]; then
     curl -X GET "http://${SERVER_IP}:${SERVER_PORT}${REQUEST_PATH}" -w '\n' 
    
   else 
