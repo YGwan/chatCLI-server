@@ -39,6 +39,16 @@ cd spring-chatgpt-communication/shell
 source chatgptCommand.sh 
 ```
 
+- Usage guide
+  - [English Version](https://github.com/YGwan/spring-chatgpt-communication/blob/main/docs/Usage_English.pdf)
+  - [Korean Version](https://github.com/YGwan/spring-chatgpt-communication/blob/main/docs/Usage_Korean.pdf)
+
+<br>
+
+- Developer guide
+  - [English Version](https://github.com/YGwan/spring-chatgpt-communication/blob/main/docs/Develop_English.pdf)
+  - [Korean Version](https://github.com/YGwan/spring-chatgpt-communication/blob/main/docs/Develop_Korean.pdf)
+
 <br>
 
 ## Project Structure
