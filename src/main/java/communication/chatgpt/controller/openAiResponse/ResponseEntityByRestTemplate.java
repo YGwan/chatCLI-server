@@ -1,4 +1,4 @@
-package communication.chatgpt.controller;
+package communication.chatgpt.controller.openAiResponse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Component
-public class OpenAiResponseEntity {
+public class ResponseEntityByRestTemplate implements OpenAiResponse{
 
     private final ObjectMapper objectMapper;
     private final RestTemplate rt;
