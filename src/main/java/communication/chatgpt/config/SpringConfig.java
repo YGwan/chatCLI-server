@@ -1,6 +1,8 @@
 package communication.chatgpt.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import communication.chatgpt.controller.openAiResponse.OpenAiResponse;
+import communication.chatgpt.controller.openAiResponse.ResponseEntityByRestTemplate;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -38,5 +40,10 @@ public class SpringConfig {
         headers.setContentType(MediaType.MULTIPART_FORM_DATA);
         headers.setBearerAuth(key);
         return headers;
+    }
+
+    @Bean
+    public OpenAiResponse openAiResponse() {
+        return new ResponseEntityByRestTemplate(objectMapper(), restTemplate());
     }
 }

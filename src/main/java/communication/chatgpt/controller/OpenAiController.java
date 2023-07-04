@@ -1,6 +1,7 @@
 package communication.chatgpt.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import communication.chatgpt.controller.openAiResponse.OpenAiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,7 @@ import java.io.IOException;
 @RequestMapping("/v1")
 public class OpenAiController {
 
-    private final OpenAiResponseEntity openAiResponseEntity;
+    private final OpenAiResponse openAiResponse;
     private final OpenAiRequestEntity openAiRequestEntity;
 
     private String chatRequest = "";
@@ -24,7 +25,7 @@ public class OpenAiController {
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
         chatRequest = chatRequest + request;
         HttpEntity<String> openAiRequest = openAiRequestEntity.chatParsed(chatRequest);
-        ResponseEntity<String> openAiResponseEntity = this.openAiResponseEntity.chatParsed(openAiRequest);
+        ResponseEntity<String> openAiResponseEntity = this.openAiResponse.chatParsed(openAiRequest);
         chatRequest = chatRequest + openAiResponseEntity.getBody();
         return openAiResponseEntity;
     }
@@ -38,30 +39,30 @@ public class OpenAiController {
     @PostMapping("/gc")
     public ResponseEntity<String> grammarCheck(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.grammarCheckParsed(request);
-        return openAiResponseEntity.completionsParsed(openAiRequest);
+        return openAiResponse.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/mood")
     public ResponseEntity<String> tweetClassifier(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.tweetClassifierParsed(request);
-        return openAiResponseEntity.completionsParsed(openAiRequest);
+        return openAiResponse.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/trans")
     public ResponseEntity<String> translate(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.translateParsed(request);
-        return openAiResponseEntity.completionsParsed(openAiRequest);
+        return openAiResponse.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/summarize")
     public HttpEntity<String> summarize(@RequestBody String request) throws JsonProcessingException {
         HttpEntity<String> openAiRequest = openAiRequestEntity.summarizeParsed(request);
-        return openAiResponseEntity.completionsParsed(openAiRequest);
+        return openAiResponse.completionsParsed(openAiRequest);
     }
 
     @PostMapping("/audio/transcriptions")
     public HttpEntity<String> transcriptions(@RequestPart("file") MultipartFile file) throws IOException {
         HttpEntity<MultiValueMap<String, Object>> multiValueMapHttpEntity = openAiRequestEntity.transcriptionParsed(file);
-        return openAiResponseEntity.transcriptionParsed(multiValueMapHttpEntity);
+        return openAiResponse.transcriptionParsed(multiValueMapHttpEntity);
     }
 }
