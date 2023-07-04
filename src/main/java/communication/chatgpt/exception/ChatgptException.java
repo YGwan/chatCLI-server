@@ -5,12 +5,12 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class ChatGptException extends RuntimeException {
+public class ChatgptException extends RuntimeException {
 
     private ErrorCode errorCode;
     private String message;
 
-    public ChatGptException(ErrorCode errorCode) {
+    public ChatgptException(ErrorCode errorCode) {
         this.errorCode = errorCode;
     }
 

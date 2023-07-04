@@ -12,8 +12,8 @@ import org.springframework.web.multipart.support.MissingServletRequestPartExcept
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(ChatGptException.class)
-    public ResponseEntity<String> chatGptExceptionHandler(ChatGptException e) {
+    @ExceptionHandler(ChatgptException.class)
+    public ResponseEntity<String> chatGptExceptionHandler(ChatgptException e) {
         log.error(e.getMessage());
         return error(e);
     }
@@ -21,13 +21,13 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> hmnrExceptionHandler(HttpMessageNotReadableException e) {
         log.error(e.getMessage());
-        return error(new ChatGptException(ErrorCode.INPUT_NOT_FOUND));
+        return error(new ChatgptException(ErrorCode.INPUT_NOT_FOUND));
     }
 
     @ExceptionHandler(MissingServletRequestPartException.class)
     public ResponseEntity<String> msrpExceptionHandler(MissingServletRequestPartException e) {
         log.error(e.getMessage());
-        return error(new ChatGptException(ErrorCode.INPUT_NOT_FOUND));
+        return error(new ChatgptException(ErrorCode.INPUT_NOT_FOUND));
     }
 
     @ExceptionHandler(RuntimeException.class)
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
         return serverError();
     }
 
-    private ResponseEntity<String> error(ChatGptException e) {
+    private ResponseEntity<String> error(ChatgptException e) {
         return ResponseEntity.status(e.getErrorCode().getHttpstatus()).body(e.getMessage());
     }
 
