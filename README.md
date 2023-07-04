@@ -141,7 +141,6 @@ source chatgptCommand.sh
 |Emotional Analysis |chatAsk -md "Question Content" |Emotional Analysis for Sentences. Emotional Analysis is classified into three categories: negative, positive, and netal.|
 |Sentence Translation |chatAsk -t "Question Contents" | English sentences are translated into Korean and shown.|
 |Sentence Summary |chatAsk -md "Question Content" |Shows a short summary of the long sentence.|
-|Top search terms|chatAsk-rank|Shows the top five question keywords that users usually ask. |
 
 <br>
 
