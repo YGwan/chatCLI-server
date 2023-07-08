@@ -31,17 +31,7 @@ public class ResponseEntityByWebClient implements OpenAiResponse {
 
     @Override
     public ResponseEntity<String> chatParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        String openAiRequestBody = Objects.requireNonNull(openAiRequest.getBody());
-
-        Mono<ResponseEntity<String>> responseMono = webClient
-                .method(HttpMethod.POST)
-                .uri(Chat.CHAT_ENDPOINT.data())
-                .body(BodyInserters.fromValue(openAiRequestBody))
-                .retrieve()
-                .toEntity(String.class);
-
-        ResponseEntity<String> response = responseMono.block();
-        String openAiResponseBody = Objects.requireNonNull(response).getBody();
+        String openAiResponseBody = getOpenAiStringResponseBody(openAiRequest.getBody(), Chat.CHAT_ENDPOINT.data());
 
         OpenAiChatResponseDto openAiChatResponseDto = objectMapper.readValue(openAiResponseBody, OpenAiChatResponseDto.class);
         String openAiMessage = openAiChatResponseDto.getChoices().get(0).getMessage().getContent().trim();
@@ -51,22 +41,25 @@ public class ResponseEntityByWebClient implements OpenAiResponse {
 
     @Override
     public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        String openAiRequestBody = Objects.requireNonNull(openAiRequest.getBody());
-
-        Mono<ResponseEntity<String>> responseMono = webClient
-                .method(HttpMethod.POST)
-                .uri(Completions.ENDPOINT.data())
-                .body(BodyInserters.fromValue(openAiRequestBody))
-                .retrieve()
-                .toEntity(String.class);
-
-        ResponseEntity<String> response = responseMono.block();
-        String openAiResponseBody = Objects.requireNonNull(response).getBody();
+        String openAiResponseBody = getOpenAiStringResponseBody(openAiRequest.getBody(), Completions.ENDPOINT.data());
 
         CompletionsResponseDto completionsResponseDto = objectMapper.readValue(openAiResponseBody, CompletionsResponseDto.class);
         String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();
 
         return getUserResponseEntity(openAiMessage);
+    }
+
+    private String getOpenAiStringResponseBody(String openAiRequestBody, String url) {
+
+        Mono<ResponseEntity<String>> responseMono = webClient
+                .method(HttpMethod.POST)
+                .uri(url)
+                .body(BodyInserters.fromValue(openAiRequestBody))
+                .retrieve()
+                .toEntity(String.class);
+
+        ResponseEntity<String> response = responseMono.block();
+        return Objects.requireNonNull(response).getBody();
     }
 
     @Override
