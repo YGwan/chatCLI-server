@@ -2,7 +2,6 @@ package communication.chatgpt.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.controller.openAiResponse.OpenAiResponse;
-import communication.chatgpt.controller.openAiResponse.ResponseEntityByRestTemplate;
 import communication.chatgpt.controller.openAiResponse.ResponseEntityByWebClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +40,18 @@ public class SpringConfig {
     }
 
     @Bean
+    public WebClient formWebClient() {
+        return WebClient.builder()
+                .defaultHeaders(
+                        headers -> {
+                            headers.add(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE);
+                            headers.setBearerAuth(key);
+                        }
+                )
+                .build();
+    }
+
+    @Bean
     public HttpHeaders headers() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -59,6 +70,6 @@ public class SpringConfig {
     @Bean
     public OpenAiResponse openAiResponse() {
 //        return new ResponseEntityByRestTemplate(objectMapper(), restTemplate());
-        return new ResponseEntityByWebClient(objectMapper(), webClient());
+        return new ResponseEntityByWebClient(objectMapper(), webClient(), formWebClient());
     }
 }

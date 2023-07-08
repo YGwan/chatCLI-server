@@ -4,9 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
 import communication.chatgpt.data.Completions;
+import communication.chatgpt.data.Transcription;
 import communication.chatgpt.dto.UserResponse;
 import communication.chatgpt.dto.chat.response.OpenAiChatResponseDto;
 import communication.chatgpt.dto.completions.response.CompletionsResponseDto;
+import communication.chatgpt.dto.transcription.response.TranscriptionResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -25,6 +27,7 @@ public class ResponseEntityByWebClient implements OpenAiResponse {
 
     private final ObjectMapper objectMapper;
     private final WebClient webClient;
+    private final WebClient formWebClient;
 
     @Override
     public ResponseEntity<String> chatParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
@@ -68,7 +71,20 @@ public class ResponseEntityByWebClient implements OpenAiResponse {
 
     @Override
     public ResponseEntity<String> transcriptionParsed(HttpEntity<MultiValueMap<String, Object>> openAiRequest) throws JsonProcessingException {
-        return null;
+        Mono<ResponseEntity<String>> responseMono = formWebClient
+                .method(HttpMethod.POST)
+                .uri(Transcription.ENDPOINT.data())
+                .body(BodyInserters.fromValue(Objects.requireNonNull(openAiRequest.getBody())))
+                .retrieve()
+                .toEntity(String.class);
+
+        ResponseEntity<String> response = responseMono.block();
+        String openAiResponseBody = Objects.requireNonNull(response).getBody();
+
+        TranscriptionResponseDto transcriptionResponseDto = objectMapper.readValue(openAiResponseBody, TranscriptionResponseDto.class);
+        String openAiMessage = transcriptionResponseDto.getText();
+
+        return getUserResponseEntity(openAiMessage);
     }
 
     private ResponseEntity<String> getUserResponseEntity(String openAiMessage) {
