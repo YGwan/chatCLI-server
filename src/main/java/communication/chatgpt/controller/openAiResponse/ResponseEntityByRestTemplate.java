@@ -1,4 +1,4 @@
-package communication.chatgpt.controller;
+package communication.chatgpt.controller.openAiResponse;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -19,7 +19,7 @@ import org.springframework.web.client.RestTemplate;
 
 @RequiredArgsConstructor
 @Component
-public class OpenAiResponseEntity {
+public class ResponseEntityByRestTemplate implements OpenAiResponse{
 
     private final ObjectMapper objectMapper;
     private final RestTemplate rt;
@@ -43,12 +43,6 @@ public class OpenAiResponseEntity {
         TranscriptionResponseDto transcriptionResponseDto = objectMapper.readValue(response.getBody(), TranscriptionResponseDto.class);
         String openAiMessage = transcriptionResponseDto.getText();
         return getUserResponseEntity(openAiMessage);
-    }
-
-    public String keywordsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        ResponseEntity<String> response = rt.exchange(Completions.ENDPOINT.data(), HttpMethod.POST, openAiRequest, String.class);
-        CompletionsResponseDto completionsResponseDto = objectMapper.readValue(response.getBody(), CompletionsResponseDto.class);
-        return completionsResponseDto.getChoices().get(0).getText().trim();
     }
 
     private ResponseEntity<String> getUserResponseEntity(String openAiMessage) {
