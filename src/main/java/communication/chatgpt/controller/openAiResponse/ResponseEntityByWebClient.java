@@ -3,10 +3,10 @@ package communication.chatgpt.controller.openAiResponse;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.data.Chat;
+import communication.chatgpt.data.Completions;
 import communication.chatgpt.dto.UserResponse;
 import communication.chatgpt.dto.chat.response.OpenAiChatResponseDto;
-import communication.chatgpt.exception.ChatgptException;
-import communication.chatgpt.exception.ErrorCode;
+import communication.chatgpt.dto.completions.response.CompletionsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -17,6 +17,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.Objects;
+
 @RequiredArgsConstructor
 @Component
 public class ResponseEntityByWebClient implements OpenAiResponse {
@@ -26,24 +28,19 @@ public class ResponseEntityByWebClient implements OpenAiResponse {
 
     @Override
     public ResponseEntity<String> chatParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        if (openAiRequest.getBody() == null) {
-            throw new ChatgptException(ErrorCode.BODY_NOT_FOUND);
-        }
+        String openAiRequestBody = Objects.requireNonNull(openAiRequest.getBody());
 
         Mono<ResponseEntity<String>> responseMono = webClient
                 .method(HttpMethod.POST)
                 .uri(Chat.CHAT_ENDPOINT.data())
-                .body(BodyInserters.fromValue(openAiRequest.getBody()))
+                .body(BodyInserters.fromValue(openAiRequestBody))
                 .retrieve()
                 .toEntity(String.class);
 
         ResponseEntity<String> response = responseMono.block();
+        String openAiResponseBody = Objects.requireNonNull(response).getBody();
 
-        if (response == null) {
-            throw new ChatgptException(ErrorCode.BODY_NOT_FOUND);
-        }
-
-        OpenAiChatResponseDto openAiChatResponseDto = objectMapper.readValue(response.getBody(), OpenAiChatResponseDto.class);
+        OpenAiChatResponseDto openAiChatResponseDto = objectMapper.readValue(openAiResponseBody, OpenAiChatResponseDto.class);
         String openAiMessage = openAiChatResponseDto.getChoices().get(0).getMessage().getContent().trim();
 
         return getUserResponseEntity(openAiMessage);
@@ -51,7 +48,22 @@ public class ResponseEntityByWebClient implements OpenAiResponse {
 
     @Override
     public ResponseEntity<String> completionsParsed(HttpEntity<String> openAiRequest) throws JsonProcessingException {
-        return null;
+        String openAiRequestBody = Objects.requireNonNull(openAiRequest.getBody());
+
+        Mono<ResponseEntity<String>> responseMono = webClient
+                .method(HttpMethod.POST)
+                .uri(Completions.ENDPOINT.data())
+                .body(BodyInserters.fromValue(openAiRequestBody))
+                .retrieve()
+                .toEntity(String.class);
+
+        ResponseEntity<String> response = responseMono.block();
+        String openAiResponseBody = Objects.requireNonNull(response).getBody();
+
+        CompletionsResponseDto completionsResponseDto = objectMapper.readValue(openAiResponseBody, CompletionsResponseDto.class);
+        String openAiMessage = completionsResponseDto.getChoices().get(0).getText().trim();
+
+        return getUserResponseEntity(openAiMessage);
     }
 
     @Override
