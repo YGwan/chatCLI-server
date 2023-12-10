@@ -78,7 +78,16 @@ source chatgptCommand.sh
 
 <br>
 
+## technology of use
+
+<br>
+
+Springboot, JPA, ResTemplate, Shell Script, MySQL, Swagger
+
+<br>
+
 ## Core Technology
+
 <br>
 
 1. ObjectMapper
@@ -160,23 +169,3 @@ If you only modify the shell script to the correct format for that OS, it works 
 
 
 <br>
-
-## Licenses
-
-MIT
-
-<br>
-
-## References
-
-https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/web/client/RestTemplate.html   
-https://platform.openai.com/examples
-
-<br>
-
-<br>
-
-
-
-
-
