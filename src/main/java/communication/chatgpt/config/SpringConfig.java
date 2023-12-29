@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.controller.openAiResponse.OpenAiResponse;
 import communication.chatgpt.controller.openAiResponse.ResponseEntityByWebClient;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
@@ -11,11 +12,19 @@ import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.Duration;
+
 @Configuration
 public class SpringConfig {
 
     @Value("${open-ai.key}")
     private String key;
+
+    @Value("${server.connection-timeout.second}")
+    private int connectionTimeout;
+
+    @Value("${server.read-timeout.second}")
+    private int readTimeout;
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -23,8 +32,11 @@ public class SpringConfig {
     }
 
     @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
+    public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
+        return restTemplateBuilder
+                .setConnectTimeout(Duration.ofSeconds(connectionTimeout))
+                .setReadTimeout(Duration.ofSeconds(readTimeout))
+                .build();
     }
 
     @Bean
