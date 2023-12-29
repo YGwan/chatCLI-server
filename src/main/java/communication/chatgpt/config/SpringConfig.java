@@ -3,14 +3,17 @@ package communication.chatgpt.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import communication.chatgpt.controller.openAiResponse.OpenAiResponse;
 import communication.chatgpt.controller.openAiResponse.ResponseEntityByWebClient;
+import io.netty.channel.ChannelOption;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.client.reactive.ReactorClientHttpConnector;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.reactive.function.client.WebClient;
+import reactor.netty.http.client.HttpClient;
 
 import java.time.Duration;
 
@@ -48,6 +51,13 @@ public class SpringConfig {
                             headers.setBearerAuth(key);
                         }
                 )
+                .clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create()
+                                .responseTimeout(Duration.ofSeconds(responseTimeout))
+                                .option(
+                                        ChannelOption.CONNECT_TIMEOUT_MILLIS, connectionTimeout * 1000
+                                )
+                ))
                 .build();
     }
 
@@ -59,7 +69,13 @@ public class SpringConfig {
                             headers.add(HttpHeaders.CONTENT_TYPE, MediaType.MULTIPART_FORM_DATA_VALUE);
                             headers.setBearerAuth(key);
                         }
-                )
+                ).clientConnector(new ReactorClientHttpConnector(
+                        HttpClient.create()
+                                .responseTimeout(Duration.ofSeconds(responseTimeout))
+                                .option(
+                                        ChannelOption.CONNECT_TIMEOUT_MILLIS, connectionTimeout * 1000
+                                )
+                ))
                 .build();
     }
 
