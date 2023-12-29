@@ -23,8 +23,8 @@ public class SpringConfig {
     @Value("${server.connection-timeout.second}")
     private int connectionTimeout;
 
-    @Value("${server.read-timeout.second}")
-    private int readTimeout;
+    @Value("${server.response-timeout.second}")
+    private int responseTimeout;
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -35,7 +35,7 @@ public class SpringConfig {
     public RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder
                 .setConnectTimeout(Duration.ofSeconds(connectionTimeout))
-                .setReadTimeout(Duration.ofSeconds(readTimeout))
+                .setReadTimeout(Duration.ofSeconds(responseTimeout))
                 .build();
     }
 
