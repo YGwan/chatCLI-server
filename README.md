@@ -157,7 +157,6 @@ Springboot, JPA, ResTemplate, Shell Script, MySQL, Swagger
 
 - MacOS
 - Ubuntu
-- Linux
 
 If you only modify the shell script to the correct format for that OS, it works fine for other OS.
 
