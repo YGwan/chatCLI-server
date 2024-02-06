@@ -82,7 +82,7 @@ source chatgptCommand.sh
 
 <br>
 
-Springboot, JPA, ResTemplate, Shell Script, MySQL, Swagger
+Springboot, ResTemplate, Shell Script, HTTPS
 
 <br>
 
