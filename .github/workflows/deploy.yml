@@ -19,7 +19,6 @@ jobs:
           script: |
             source ~/.bashrc
             echo $OPEN_AI_KEY
-            echo OPEN_AI_KEY
             echo "test"
             cd /home/ubuntu/spring-chatgpt-communication
             git pull origin main
