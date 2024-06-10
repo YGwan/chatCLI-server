@@ -1,0 +1,24 @@
+name: deploy chatGPT server to AWS EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ssh로 서버 접근 & git pull 후 재배포 진행
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script_stop: true
+          script: |
+            cd /home/ubuntu/spring-chatgpt-communication
+            git pull origin main
+            ./gradlew clean build
+            sudo fuser -k -n tcp 8081 || true
+            nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
