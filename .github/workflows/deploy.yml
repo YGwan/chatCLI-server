@@ -17,8 +17,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
-            echo $OPEN_AI_KEY > ./test1.log
-            echo "test"
+            source ~/.bashrc
             cd /home/ubuntu/spring-chatgpt-communication
             git pull origin main
             ./gradlew clean build
