@@ -21,6 +21,11 @@ public class OpenAiController {
 
     private String chatRequest = "";
 
+    @GetMapping()
+    public ResponseEntity<String> healthCheck() {
+        return ResponseEntity.ok("ok");
+    }
+
     @PostMapping("/chat")
     public ResponseEntity<String> chat(@RequestBody String request) throws JsonProcessingException {
         chatRequest = chatRequest + request;
