@@ -23,7 +23,7 @@ public class OpenAiController {
 
     @GetMapping()
     public ResponseEntity<String> healthCheck() {
-        return ResponseEntity.ok("ok");
+        return ResponseEntity.ok("test");
     }
 
     @PostMapping("/chat")
