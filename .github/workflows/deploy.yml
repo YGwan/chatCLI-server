@@ -18,6 +18,8 @@ jobs:
           script_stop: true
           script: |
             source ~/.bashrc
+            echo $OPEN_AI_API
+            echo "test"
             cd /home/ubuntu/spring-chatgpt-communication
             git pull origin main
             ./gradlew clean build
