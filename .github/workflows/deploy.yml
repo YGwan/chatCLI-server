@@ -9,7 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      PORT: ${{ secrets.SERVER_PORT }}
+      SERVER_PORT: ${{ secrets.SERVER_PORT }}
+      ENV_FILE_PATH: ${{ secrets.ENV_FILE_PATH }}
     steps:
       - name: ssh로 서버 접근 & git pull 후 재배포 진행
         uses: appleboy/ssh-action@v1.0.3
@@ -19,9 +20,9 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
-            source ~/env.sh
+            source ${{ env.ENV_FILE_PATH }}
             cd /home/ubuntu/spring-chatgpt-communication
             git pull origin main
             ./gradlew clean build
-            sudo fuser -k -n tcp ${{ env.PORT }} || true
+            sudo fuser -k -n tcp ${{ env.SERVER_PORT }} || true
             nohup java -jar build/libs/*SNAPSHOT.jar > ./output.log 2>&1 &
