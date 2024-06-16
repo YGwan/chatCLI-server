@@ -22,11 +22,13 @@ jobs:
          distribution: 'temurin'
          java-version: '11'
 
-#      - name: application.yml에 필요한 데이터 활성화하기
-#        run: |
-#          touch ${{ env.ENV_FILE_PATH }}
-#          echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
-#          source ${{ env.ENV_FILE_PATH }}
+      - name: application.yml에 필요한 데이터 활성화하기
+        run: |
+          touch ${{ env.ENV_FILE_PATH }}
+          echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
+          source ${{ env.ENV_FILE_PATH }}
+          echo $OPEN_AI_KEY
+          cat ${{ env.ENV_FILE_PATH }}
 
       - name: 테스트 및 빌드하기
         run: |
