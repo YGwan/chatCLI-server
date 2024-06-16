@@ -55,4 +55,5 @@ jobs:
           script_stop: true
           script: |
             sudo fuser -k -n tcp ${{ env.SERVER_PORT }} || true
-            nohup java -jar /home/ubuntu/spring-chatgpt-communication/deploy > ./output.log 2>&1 &
+            cd /home/ubuntu/spring-chatgpt-communication/deploy
+            nohup java -jar project.jar > ./output.log 2>&1 & 
