@@ -51,6 +51,7 @@ jobs:
     steps:
       - name: ssh로 서버 접근 & git pull 후 재배포 진행
         uses: appleboy/ssh-action@v1.0.3
+
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
