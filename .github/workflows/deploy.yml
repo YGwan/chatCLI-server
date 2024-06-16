@@ -24,12 +24,6 @@ jobs:
 
       - name: application.yml에 필요한 데이터 활성화하기
         run: |
-          touch env.sh
-          echo "${{ secrets.ENV }}" > env.sh
-          source env.sh
-          ls
-          cat env.sh
-          echo $OPEN_AI_KEY
           ./gradlew clean build
           mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
