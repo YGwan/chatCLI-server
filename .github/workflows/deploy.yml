@@ -23,6 +23,7 @@ jobs:
             touch ${{ env.ENV_FILE_PATH }}
             echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
             source ${{ env.ENV_FILE_PATH }}
+            echo OPEN_AI_KEY
             cd /home/ubuntu/spring-chatgpt-communication
             git pull origin main
             ./gradlew clean build
