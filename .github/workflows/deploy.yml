@@ -54,6 +54,9 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
+            touch ${{ env.ENV_FILE_PATH }}
+            echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
+            source ${{ env.ENV_FILE_PATH }}
             sudo fuser -k -n tcp ${{ env.SERVER_PORT }} || true
             cd /home/ubuntu/spring-chatgpt-communication/deploy
             nohup java -jar project.jar > ./output.log 2>&1 & 
