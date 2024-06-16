@@ -27,15 +27,17 @@ jobs:
           touch ${{ env.ENV_FILE_PATH }}
           echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
           source ${{ env.ENV_FILE_PATH }}
-          echo $OPEN_AI_KEY
-          cat ${{ env.ENV_FILE_PATH }}
-
-      - name: 테스트 및 빌드하기
-        run: |
-          echo $OPEN_AI_KEY
           ls
+          echo $OPEN_AI_KEY
           ./gradlew clean build
           mv ./build/libs/*SNAPSHOT.jar ./project.jar
+
+#      - name: 테스트 및 빌드하기
+#        run: |
+#          echo $OPEN_AI_KEY
+#          ls
+#          ./gradlew clean build
+#          mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
       - name: SCP로 EC2에 빌드 된 파일 전송하기
         uses : appleboy/scp-action@master
