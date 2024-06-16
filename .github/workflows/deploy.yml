@@ -22,16 +22,16 @@ jobs:
          distribution: 'temurin'
          java-version: '11'
 
-      - name: application.yml에 필요한 데이터 활성화하기
-        run: |
-          touch ${{ env.ENV_FILE_PATH }}
-          echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
-          source ${{ env.ENV_FILE_PATH }}
+#      - name: application.yml에 필요한 데이터 활성화하기
+#        run: |
+#          touch ${{ env.ENV_FILE_PATH }}
+#          echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
+#          source ${{ env.ENV_FILE_PATH }}
 
       - name: 테스트 및 빌드하기
         run: |
           ./gradlew clean build
-          mv ./build/libs/*SNAPSHOT.jar ./project.jar
+          mv ./build/libs/*SNAPSHOT.jar ./test.jar
 
       - name: SCP로 EC2에 빌드 된 파일 전송하기
         uses : appleboy/scp-action@master
@@ -39,7 +39,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: project.jar
+          source: ./test.jar
           target: /home/ubuntu/spring-chatgpt-communication/deploy
 
   deploy:
