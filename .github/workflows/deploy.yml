@@ -32,6 +32,8 @@ jobs:
 
       - name: 테스트 및 빌드하기
         run: |
+          echo $OPEN_AI_KEY
+          ls
           ./gradlew clean build
           mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
