@@ -20,6 +20,8 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script_stop: true
           script: |
+            touch ${{ env.ENV_FILE_PATH }}
+            echo "${{ secrets.ENV }}" > ${{ env.ENV_FILE_PATH }}
             source ${{ env.ENV_FILE_PATH }}
             cd /home/ubuntu/spring-chatgpt-communication
             git pull origin main
