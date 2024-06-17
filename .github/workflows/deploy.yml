@@ -27,12 +27,12 @@ jobs:
           ./gradlew clean build
           mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
-#      - name: 테스트 및 빌드하기
-#        run: |
-#          echo $OPEN_AI_KEY
-#          ls
-#          ./gradlew clean build
-#          mv ./build/libs/*SNAPSHOT.jar ./project.jar
+      - name: 테스트 및 빌드하기
+        run: |
+          echo $OPEN_AI_KEY
+          ls
+          ./gradlew clean build
+          mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
       - name: SCP로 EC2에 빌드 된 파일 전송하기
         uses : appleboy/scp-action@master
