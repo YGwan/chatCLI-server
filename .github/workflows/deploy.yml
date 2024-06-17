@@ -28,7 +28,6 @@ jobs:
 
       - name: spring 환경변수 파일 복사
         run: |
-          ls
           cp spring-chatgpt-communication-vault/application.properties \
              src/main/resources/application.properties
 
@@ -56,7 +55,6 @@ jobs:
     steps:
       - name: ssh로 서버 접근 & git pull 후 재배포 진행
         uses: appleboy/ssh-action@v1.0.3
-
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
