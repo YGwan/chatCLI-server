@@ -9,11 +9,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    env:
-      ENV_FILE_PATH: ${{ secrets.ENV_FILE_PATH }}
-
     steps:
-      - name : GitHub 리포지토리의 코드를 체크아웃(복제)하여 github actions의 작업 환경에 가져옴
+      - name : GitHub 리포지토리의 코드를 체크아웃
         uses: actions/checkout@v4
 
       - name : JDK 11버전 설치
@@ -22,20 +19,24 @@ jobs:
          distribution: 'temurin'
          java-version: '11'
 
-      - name: application.yml에 필요한 데이터 활성화하기
+      - name: Checkout private vault repository
+        uses: actions/checkout@v4
+        with:
+          repository: YGwan/spring-chatgpt-communication-vault
+          token: ${{ secrets.PERSONAL_GIT_TOKEN }}
+          path: ./spring-chatgpt-communication-vault
         run: |
-          ./gradlew clean build
-          mv ./build/libs/*SNAPSHOT.jar ./project.jar
+          ls
+          cp spring-chatgpt-communication-vault/application.properties \
+             src/main/resources/application.properties
 
       - name: 테스트 및 빌드하기
         run: |
-          echo $OPEN_AI_KEY
-          ls
           ./gradlew clean build
           mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
       - name: SCP로 EC2에 빌드 된 파일 전송하기
-        uses : appleboy/scp-action@master
+        uses : appleboy/scp-action@v1.0.3
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
