@@ -25,6 +25,8 @@ jobs:
           repository: YGwan/spring-chatgpt-communication-vault
           token: ${{ secrets.PERSONAL_GIT_TOKEN }}
           path: ./spring-chatgpt-communication-vault
+
+      - name : spring 환경변수 파일 복사
         run: |
           ls
           cp spring-chatgpt-communication-vault/application.properties \
