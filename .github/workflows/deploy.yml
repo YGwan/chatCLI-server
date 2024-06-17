@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name : GitHub 리포지토리의 코드를 체크아웃
+      - name: GitHub 리포지토리의 코드를 체크아웃
         uses: actions/checkout@v4
 
       - name : JDK 11버전 설치
@@ -26,7 +26,7 @@ jobs:
           token: ${{ secrets.PERSONAL_GIT_TOKEN }}
           path: ./spring-chatgpt-communication-vault
 
-      - name : spring 환경변수 파일 복사
+      - name: spring 환경변수 파일 복사
         run: |
           ls
           cp spring-chatgpt-communication-vault/application.properties \
@@ -38,7 +38,7 @@ jobs:
           mv ./build/libs/*SNAPSHOT.jar ./project.jar
 
       - name: SCP로 EC2에 빌드 된 파일 전송하기
-        uses : appleboy/scp-action@v1.0.3
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
