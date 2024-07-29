@@ -1,4 +1,4 @@
-# ChatCLI Server
+# chatCLI - server
 
 <br>
 
