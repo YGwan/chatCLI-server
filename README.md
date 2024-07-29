@@ -1,4 +1,4 @@
-# ChatGPT CLI Command
+# ChatCLI Server
 
 <br>
 
